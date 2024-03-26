@@ -26,9 +26,8 @@ public class StringPrefixedIdGenerator implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        String SQL_INSERT = "INSERT INTO " + sequenceName + " (next_val) VALUES (NULL)";
-        session.createNativeMutationQuery(SQL_INSERT).executeUpdate();
-        Integer nextSeqValue = session.createNativeQuery("SELECT last_insert_id()", Integer.class).getSingleResult();
+        String SQL_QUERY = "SELECT next_" + sequenceName + "()";
+        Integer nextSeqValue = session.createNativeQuery(SQL_QUERY, Integer.class).getSingleResult();
         return valuePrefix + String.format(numberFormat, nextSeqValue);
     }
 

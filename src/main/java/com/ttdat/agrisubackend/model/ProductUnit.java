@@ -36,4 +36,6 @@ public class ProductUnit {
     @Column(precision = 15, scale = 2)
     private BigDecimal sellingPrice;
 
+    private boolean isDefault;
+
 }

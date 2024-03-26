@@ -2,6 +2,7 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.model.Product;
+import com.ttdat.agrisubackend.model.ProductUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,11 @@ public class ProductMapper {
         productDTO.setStockQuantity(product.getStockQuantity());
         productDTO.setProductUnits(product.getProductUnits().stream().map(productUnitMapper::toDto)
                 .collect(Collectors.toList()));
-
+        productDTO.setDisplayedProductUnit(product.getProductUnits().stream()
+                .filter(ProductUnit::isDefault)
+                .map(productUnitMapper::toDto)
+                .findFirst()
+                .orElse(null));
         return productDTO;
     }
 

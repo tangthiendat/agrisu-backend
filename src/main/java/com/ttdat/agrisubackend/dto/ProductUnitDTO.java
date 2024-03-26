@@ -1,6 +1,7 @@
 package com.ttdat.agrisubackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ttdat.agrisubackend.model.Product;
 import com.ttdat.agrisubackend.model.Unit;
 import jakarta.persistence.*;
@@ -15,4 +16,6 @@ public class ProductUnitDTO {
     private Integer baseQuantity;
     private BigDecimal originalPrice;
     private BigDecimal sellingPrice;
+    @JsonProperty("isDefault")
+    private boolean isDefault;
 }

@@ -24,6 +24,7 @@ public class ProductUnitMapper {
         productUnitDTO.setBaseQuantity(productUnit.getBaseQuantity());
         productUnitDTO.setOriginalPrice(productUnit.getOriginalPrice());
         productUnitDTO.setSellingPrice(productUnit.getSellingPrice());
+        productUnitDTO.setDefault(productUnit.isDefault());
         return productUnitDTO;
     }
 
@@ -34,6 +35,7 @@ public class ProductUnitMapper {
         productUnit.setBaseQuantity(productUnitDTO.getBaseQuantity());
         productUnit.setOriginalPrice(productUnitDTO.getOriginalPrice());
         productUnit.setSellingPrice(productUnitDTO.getSellingPrice());
+        productUnit.setDefault(productUnitDTO.isDefault());
         return productUnit;
     }
 }
