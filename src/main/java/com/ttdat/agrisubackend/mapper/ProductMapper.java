@@ -20,17 +20,17 @@ public class ProductMapper {
         this.productUnitMapper = productUnitMapper;
     }
 
-    public ProductDTO toDto(Product product) {
+    public ProductDTO toDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductId(product.getProductId());
         productDTO.setProductName(product.getProductName());
-        productDTO.setProductType(productTypeMapper.toDto(product.getProductType()));
+        productDTO.setProductType(productTypeMapper.toDTO(product.getProductType()));
         productDTO.setStockQuantity(product.getStockQuantity());
-        productDTO.setProductUnits(product.getProductUnits().stream().map(productUnitMapper::toDto)
+        productDTO.setProductUnits(product.getProductUnits().stream().map(productUnitMapper::toDTO)
                 .collect(Collectors.toList()));
         productDTO.setDisplayedProductUnit(product.getProductUnits().stream()
                 .filter(ProductUnit::isDefault)
-                .map(productUnitMapper::toDto)
+                .map(productUnitMapper::toDTO)
                 .findFirst()
                 .orElse(null));
         return productDTO;

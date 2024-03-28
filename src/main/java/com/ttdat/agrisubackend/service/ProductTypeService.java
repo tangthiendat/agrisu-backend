@@ -22,13 +22,13 @@ public class ProductTypeService {
 
     public List<ProductTypeDTO> getAll(){
         List<ProductType> productTypes = productTypeRepository.findAll();
-        return productTypes.stream().map(productTypeMapper::toDto).toList();
+        return productTypes.stream().map(productTypeMapper::toDTO).toList();
     }
 
     public ProductTypeDTO create(ProductTypeDTO productTypeDTO){
         ProductType productType = productTypeMapper.toModel(productTypeDTO);
         ProductType savedProductType = productTypeRepository.save(productType);
-        return productTypeMapper.toDto(savedProductType);
+        return productTypeMapper.toDTO(savedProductType);
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductTypeMapper {
-    public ProductTypeDTO toDto(ProductType productType){
+    public ProductTypeDTO toDTO(ProductType productType){
         ProductTypeDTO productTypeDTO = new ProductTypeDTO();
         productTypeDTO.setProductTypeId(productType.getProductTypeId());
         productTypeDTO.setProductTypeName(productType.getProductTypeName());

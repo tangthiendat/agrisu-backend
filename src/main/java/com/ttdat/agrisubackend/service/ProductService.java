@@ -1,9 +1,7 @@
 package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.ProductDTO;
-import com.ttdat.agrisubackend.dto.ProductUnitDTO;
 import com.ttdat.agrisubackend.mapper.ProductMapper;
-import com.ttdat.agrisubackend.mapper.ProductTypeMapper;
 import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
 import com.ttdat.agrisubackend.model.Product;
 import com.ttdat.agrisubackend.model.ProductUnit;
@@ -36,17 +34,44 @@ public class ProductService {
         this.productUnitMapper = productUnitMapper;
     }
 
-    public ProductDTO update(ProductDTO productDTO) {
+    @Transactional
+    public ProductDTO add(ProductDTO productDTO) {
         Product savedProduct = productRepository.save(productMapper.toModel(productDTO));
-        Set<ProductUnit> productUnits = productDTO.getProductUnits().stream().map(productUnitMapper::toModel).collect(Collectors.toSet());
-        productUnits.forEach(productUnit -> productUnit.setProduct(savedProduct));
+        Set<ProductUnit> productUnits = productDTO.getProductUnits().stream()
+                .map(productUnitMapper::toModel)
+                .peek(productUnit -> productUnit.setProduct(savedProduct))
+                .collect(Collectors.toSet());
+        System.out.println("PRODUCT UNITS TO SAVE = " + productUnits);
         List<ProductUnit> savedProductUnits = productUnitRepository.saveAll(productUnits);
         savedProduct.setProductUnits(new HashSet<>(savedProductUnits));
-        return productMapper.toDto(savedProduct);
+        return productMapper.toDTO(savedProduct);
+    }
+
+
+    @Transactional
+    public ProductDTO update(String id, ProductDTO productDTO) {
+        // Update productToUpdate
+        Product productToUpdate = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Product convertedProduct = productMapper.toModel(productDTO);
+        productToUpdate.setProductName(convertedProduct.getProductName());
+        productToUpdate.setProductType(convertedProduct.getProductType());
+        productToUpdate.setStockQuantity(convertedProduct.getStockQuantity());
+        Product updatedProduct = productRepository.save(productToUpdate);
+        // Update productToUpdate units
+        Set<ProductUnit> productUnitsToUpdate = productUnitRepository.findByProduct(productToUpdate)
+                .orElseThrow(() -> new RuntimeException("Product units not found"));
+        productUnitsToUpdate.addAll(productDTO.getProductUnits().stream()
+                .map(productUnitMapper::toModel)
+                .peek(productUnit -> productUnit.setProduct(updatedProduct))
+                .collect(Collectors.toSet()));
+        List<ProductUnit> updatedProductUnits = productUnitRepository.saveAll(productUnitsToUpdate);
+        updatedProduct.setProductUnits(new HashSet<>(updatedProductUnits));
+        return productMapper.toDTO(updatedProduct);
     }
 
     public List<ProductDTO> getAll() {
         List<Product> products = productRepository.findAll();
-        return products.stream().map(productMapper::toDto).collect(Collectors.toList());
+        return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
     }
 }

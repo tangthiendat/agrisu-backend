@@ -25,6 +25,6 @@ public class ProductUnitService {
     public List<ProductUnitDTO> saveAll(Set<ProductUnitDTO> productUnitSet) {
         List<ProductUnit> productUnits = productUnitRepository.saveAll(
                 productUnitSet.stream().map(productUnitMapper::toModel).toList());
-        return productUnits.stream().map(productUnitMapper::toDto).toList();
+        return productUnits.stream().map(productUnitMapper::toDTO).toList();
     }
 }
