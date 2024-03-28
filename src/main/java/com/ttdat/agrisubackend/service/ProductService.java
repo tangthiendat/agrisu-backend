@@ -70,6 +70,16 @@ public class ProductService {
         return productMapper.toDTO(updatedProduct);
     }
 
+    @Transactional
+    public void delete(String id) {
+        Product productToDelete = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Set<ProductUnit> productUnitsToDelete = productUnitRepository.findByProduct(productToDelete)
+                .orElseThrow(() -> new RuntimeException("Product units not found"));
+        productUnitRepository.deleteAll(productUnitsToDelete);
+        productRepository.delete(productToDelete);
+    }
+
     public List<ProductDTO> getAll() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
