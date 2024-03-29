@@ -3,6 +3,7 @@ package com.ttdat.agrisubackend.controller;
 import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,29 +20,30 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDTO> getProducts(@RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "10") int pageSize) {
-        return productService.getPaginatedProducts(page, pageSize);
+    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(productService.getPaginatedProducts(page, pageSize));
     }
 
     @PostMapping
-    public ProductDTO addProduct(@RequestBody ProductDTO newProduct) {
-        return productService.add(newProduct);
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO newProduct) {
+        return ResponseEntity.ok(productService.add(newProduct));
     }
 
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@RequestBody ProductDTO product, @PathVariable String id) {
-        return productService.update(id, product);
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO product, @PathVariable String id) {
+        return ResponseEntity.ok(productService.update(id, product));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable String id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
         productService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/count")
-    public Long countProducts() {
-        return productService.countProducts();
+    public ResponseEntity<Long> countProducts() {
+        return ResponseEntity.ok(productService.countProducts());
     }
 
 }
