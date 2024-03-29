@@ -18,12 +18,13 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/")
-    public List<ProductDTO> getAll() {
-        return productService.getAll();
+    @GetMapping
+    public List<ProductDTO> getProducts(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "10") int pageSize) {
+        return productService.getPaginatedProducts(page, pageSize);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ProductDTO addProduct(@RequestBody ProductDTO newProduct) {
         return productService.add(newProduct);
     }
@@ -36,6 +37,11 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable String id) {
         productService.delete(id);
+    }
+
+    @GetMapping("/count")
+    public Long countProducts() {
+        return productService.countProducts();
     }
 
 }

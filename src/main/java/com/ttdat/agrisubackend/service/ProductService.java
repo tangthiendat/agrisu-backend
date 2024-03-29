@@ -9,6 +9,8 @@ import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -41,7 +43,6 @@ public class ProductService {
                 .map(productUnitMapper::toModel)
                 .peek(productUnit -> productUnit.setProduct(savedProduct))
                 .collect(Collectors.toSet());
-        System.out.println("PRODUCT UNITS TO SAVE = " + productUnits);
         List<ProductUnit> savedProductUnits = productUnitRepository.saveAll(productUnits);
         savedProduct.setProductUnits(new HashSet<>(savedProductUnits));
         return productMapper.toDTO(savedProduct);
@@ -80,8 +81,13 @@ public class ProductService {
         productRepository.delete(productToDelete);
     }
 
-    public List<ProductDTO> getAll() {
-        List<Product> products = productRepository.findAll();
+    public List<ProductDTO> getPaginatedProducts(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<Product> products = productRepository.findAll(pageable).getContent();
         return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public Long countProducts() {
+        return productRepository.count();
     }
 }
