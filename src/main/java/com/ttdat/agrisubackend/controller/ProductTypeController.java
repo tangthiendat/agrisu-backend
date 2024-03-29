@@ -3,6 +3,7 @@ package com.ttdat.agrisubackend.controller;
 import com.ttdat.agrisubackend.dto.ProductTypeDTO;
 import com.ttdat.agrisubackend.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,13 @@ public class ProductTypeController {
         this.productTypeService = productTypeService;
     }
 
-    @GetMapping("/")
-    public List<ProductTypeDTO> getAll() {
-        return productTypeService.getAll();
+    @GetMapping
+    public ResponseEntity<List<ProductTypeDTO>> getAll() {
+        return ResponseEntity.ok(productTypeService.getAll());
     }
 
-    @PostMapping("/")
-    public ProductTypeDTO create(@RequestBody ProductTypeDTO productTypeDTO) {
-        return productTypeService.create(productTypeDTO);
+    @PostMapping
+    public ResponseEntity<ProductTypeDTO> create(@RequestBody ProductTypeDTO productTypeDTO) {
+        return ResponseEntity.ok(productTypeService.create(productTypeDTO));
     }
 }

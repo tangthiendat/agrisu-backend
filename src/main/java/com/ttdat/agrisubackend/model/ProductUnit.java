@@ -1,7 +1,6 @@
 package com.ttdat.agrisubackend.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,5 +34,7 @@ public class ProductUnit {
 
     @Column(precision = 15, scale = 2)
     private BigDecimal sellingPrice;
+
+    private boolean isDefault;
 
 }

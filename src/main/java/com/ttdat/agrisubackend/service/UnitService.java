@@ -22,11 +22,11 @@ public class UnitService {
 
     public List<UnitDTO> getAll(){
         List<Unit> units = unitRepository.findAll();
-        return units.stream().map(unitMapper::toDto).toList();
+        return units.stream().map(unitMapper::toDTO).toList();
     }
 
     public UnitDTO create(UnitDTO unitDTO) {
         Unit savedUnit = unitRepository.save(unitMapper.toModel(unitDTO));
-        return unitMapper.toDto(savedUnit);
+        return unitMapper.toDTO(savedUnit);
     }
 }

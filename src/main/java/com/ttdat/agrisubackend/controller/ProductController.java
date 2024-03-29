@@ -3,6 +3,7 @@ package com.ttdat.agrisubackend.controller;
 import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +19,31 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/")
-    public List<ProductDTO> getAll() {
-        return productService.getAll();
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(productService.getPaginatedProducts(page, pageSize));
     }
 
-    @PostMapping("/")
-    public ProductDTO addProduct(@RequestBody ProductDTO newProduct) {
-        return productService.update(newProduct);
+    @PostMapping
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO newProduct) {
+        return ResponseEntity.ok(productService.add(newProduct));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO product, @PathVariable String id) {
+        return ResponseEntity.ok(productService.update(id, product));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        productService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countProducts() {
+        return ResponseEntity.ok(productService.countProducts());
     }
 
 }

@@ -11,4 +11,5 @@ public class ProductDTO {
     private ProductTypeDTO productType;
     private int stockQuantity;
     private List<ProductUnitDTO> productUnits;
+    private ProductUnitDTO displayedProductUnit;
 }
