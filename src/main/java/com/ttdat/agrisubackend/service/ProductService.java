@@ -9,6 +9,7 @@ import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class ProductService {
     public ProductDTO update(String id, ProductDTO productDTO) {
         // Update productToUpdate
         Product productToUpdate = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
         Product convertedProduct = productMapper.toModel(productDTO);
         productToUpdate.setProductName(convertedProduct.getProductName());
         productToUpdate.setProductType(convertedProduct.getProductType());
@@ -61,7 +62,7 @@ public class ProductService {
         Product updatedProduct = productRepository.save(productToUpdate);
         // Update productToUpdate units
         Set<ProductUnit> productUnitsToUpdate = productUnitRepository.findByProduct(productToUpdate)
-                .orElseThrow(() -> new RuntimeException("Product units not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + id));
         productUnitsToUpdate.addAll(productDTO.getProductUnits().stream()
                 .map(productUnitMapper::toModel)
                 .peek(productUnit -> productUnit.setProduct(updatedProduct))
@@ -74,9 +75,9 @@ public class ProductService {
     @Transactional
     public void delete(String id) {
         Product productToDelete = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
         Set<ProductUnit> productUnitsToDelete = productUnitRepository.findByProduct(productToDelete)
-                .orElseThrow(() -> new RuntimeException("Product units not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + id));
         productUnitRepository.deleteAll(productUnitsToDelete);
         productRepository.delete(productToDelete);
     }
