@@ -1,6 +1,6 @@
 package com.ttdat.agrisubackend.repository;
 
-import com.ttdat.agrisubackend.model.Product;
+import com.ttdat.agrisubackend.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.ttdat.agrisubackend.repository")
-@EntityScan("com.ttdat.agrisubackend.model")
+@EntityScan("com.ttdat.agrisubackend.entity")
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class AgrisuBackendApplication {
 

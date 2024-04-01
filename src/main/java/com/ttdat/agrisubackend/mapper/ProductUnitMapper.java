@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.ProductUnitDTO;
-import com.ttdat.agrisubackend.model.ProductUnit;
+import com.ttdat.agrisubackend.entity.ProductUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +26,10 @@ public class ProductUnitMapper {
         return productUnitDTO;
     }
 
-    public ProductUnit toModel(ProductUnitDTO productUnitDTO) {
+    public ProductUnit toProductUnit(ProductUnitDTO productUnitDTO) {
         ProductUnit productUnit = new ProductUnit();
         productUnit.setId(productUnitDTO.getId());
-        productUnit.setUnit(unitMapper.toModel(productUnitDTO.getUnit()));
+        productUnit.setUnit(unitMapper.toUnit(productUnitDTO.getUnit()));
         productUnit.setBaseQuantity(productUnitDTO.getBaseQuantity());
         productUnit.setOriginalPrice(productUnitDTO.getOriginalPrice());
         productUnit.setSellingPrice(productUnitDTO.getSellingPrice());

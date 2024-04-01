@@ -3,8 +3,8 @@ package com.ttdat.agrisubackend.service;
 import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.mapper.ProductMapper;
 import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
-import com.ttdat.agrisubackend.model.Product;
-import com.ttdat.agrisubackend.model.ProductUnit;
+import com.ttdat.agrisubackend.entity.Product;
+import com.ttdat.agrisubackend.entity.ProductUnit;
 import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
 import jakarta.transaction.Transactional;
@@ -39,9 +39,9 @@ public class ProductService {
 
     @Transactional
     public ProductDTO add(ProductDTO productDTO) {
-        Product savedProduct = productRepository.save(productMapper.toModel(productDTO));
+        Product savedProduct = productRepository.save(productMapper.toProduct(productDTO));
         Set<ProductUnit> productUnits = productDTO.getProductUnits().stream()
-                .map(productUnitMapper::toModel)
+                .map(productUnitMapper::toProductUnit)
                 .peek(productUnit -> productUnit.setProduct(savedProduct))
                 .collect(Collectors.toSet());
         List<ProductUnit> savedProductUnits = productUnitRepository.saveAll(productUnits);
@@ -55,7 +55,7 @@ public class ProductService {
         // Update productToUpdate
         Product productToUpdate = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
-        Product convertedProduct = productMapper.toModel(productDTO);
+        Product convertedProduct = productMapper.toProduct(productDTO);
         productToUpdate.setProductName(convertedProduct.getProductName());
         productToUpdate.setProductType(convertedProduct.getProductType());
         productToUpdate.setStockQuantity(convertedProduct.getStockQuantity());
@@ -64,7 +64,7 @@ public class ProductService {
         Set<ProductUnit> productUnitsToUpdate = productUnitRepository.findByProduct(productToUpdate)
                 .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + id));
         productUnitsToUpdate.addAll(productDTO.getProductUnits().stream()
-                .map(productUnitMapper::toModel)
+                .map(productUnitMapper::toProductUnit)
                 .peek(productUnit -> productUnit.setProduct(updatedProduct))
                 .collect(Collectors.toSet()));
         List<ProductUnit> updatedProductUnits = productUnitRepository.saveAll(productUnitsToUpdate);

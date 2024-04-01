@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.ProductTypeDTO;
-import com.ttdat.agrisubackend.model.ProductType;
+import com.ttdat.agrisubackend.entity.ProductType;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +13,7 @@ public class ProductTypeMapper {
         return productTypeDTO;
     }
 
-    public ProductType toModel(ProductTypeDTO productTypeDTO){
+    public ProductType toProductType(ProductTypeDTO productTypeDTO){
         ProductType productType = new ProductType();
         productType.setProductTypeId(productTypeDTO.getProductTypeId());
         productType.setProductTypeName(productTypeDTO.getProductTypeName());
