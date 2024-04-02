@@ -46,4 +46,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.countProducts());
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam String name) {
+        return ResponseEntity.ok(productService.searchProducts(name));
+    }
+
 }

@@ -91,4 +91,14 @@ public class ProductService {
     public Long countProducts() {
         return productRepository.count();
     }
+
+    public List<ProductDTO> searchProducts(String query) {
+        List<Product> products = productRepository.findByProductNameContainingIgnoreCase(query);
+        products.forEach(product -> {
+            Set<ProductUnit> productUnits = productUnitRepository.findByProduct(product)
+                    .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + product.getProductId()));
+            product.setProductUnits(new HashSet<>(productUnits));
+        });
+        return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
+    }
 }
