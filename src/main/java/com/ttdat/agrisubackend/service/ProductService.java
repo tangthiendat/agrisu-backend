@@ -93,7 +93,7 @@ public class ProductService {
     }
 
     public List<ProductDTO> searchProducts(String query) {
-        List<Product> products = productRepository.findByProductNameContainingIgnoreCase(query);
+        List<Product> products = productRepository.searchByName(query);
         products.forEach(product -> {
             Set<ProductUnit> productUnits = productUnitRepository.findByProduct(product)
                     .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + product.getProductId()));
