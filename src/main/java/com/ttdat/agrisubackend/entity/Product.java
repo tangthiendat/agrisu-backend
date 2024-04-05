@@ -33,7 +33,7 @@ public class Product extends BaseEntity {
 
     private int stockQuantity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "product_type_id", referencedColumnName = "productTypeId")
     private ProductType productType;
 

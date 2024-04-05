@@ -14,9 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,15 +58,28 @@ public class ProductService {
         productToUpdate.setProductType(convertedProduct.getProductType());
         productToUpdate.setStockQuantity(convertedProduct.getStockQuantity());
         Product updatedProduct = productRepository.save(productToUpdate);
-        // Update productToUpdate units
-        Set<ProductUnit> productUnitsToUpdate = productUnitRepository.findByProduct(productToUpdate)
-                .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + id));
-        productUnitsToUpdate.addAll(productDTO.getProductUnits().stream()
-                .map(productUnitMapper::toProductUnit)
-                .peek(productUnit -> productUnit.setProduct(updatedProduct))
-                .collect(Collectors.toSet()));
-        List<ProductUnit> updatedProductUnits = productUnitRepository.saveAll(productUnitsToUpdate);
-        updatedProduct.setProductUnits(new HashSet<>(updatedProductUnits));
+
+        Set<ProductUnit> originalProductUnits = productToUpdate.getProductUnits();
+        Set<ProductUnit> newProductUnits = convertedProduct.getProductUnits();
+        List<ProductUnit> productUnitsToDelete = new ArrayList<>();
+        // Delete product units that are not in the newProductUnits if
+        // there is less product units in newProductUnits
+        if (newProductUnits.size() < originalProductUnits.size()) {
+            for (ProductUnit productUnit : originalProductUnits) {
+                if (newProductUnits.stream().noneMatch(unit -> unit.getId().equals(productUnit.getId()))) {
+                    productUnitsToDelete.add(productUnit);
+                    newProductUnits.removeIf(newProductUnit -> newProductUnit.getId().equals(productUnit.getId()));
+                }
+            }
+            if (!productUnitsToDelete.isEmpty()) {
+                productUnitRepository.deleteAll(productUnitsToDelete);
+            }
+        }
+        // Save new product units
+        List<ProductUnit> productUnitsToSave = new ArrayList<>(newProductUnits);
+        productUnitsToSave.forEach(productUnit -> productUnit.setProduct(updatedProduct));
+        List<ProductUnit> savedProductUnits = productUnitRepository.saveAll(productUnitsToSave);
+        updatedProduct.setProductUnits(new HashSet<>(savedProductUnits));
         return productMapper.toDTO(updatedProduct);
     }
 
@@ -94,11 +105,6 @@ public class ProductService {
 
     public List<ProductDTO> searchProducts(String query) {
         List<Product> products = productRepository.searchByName(query);
-        products.forEach(product -> {
-            Set<ProductUnit> productUnits = productUnitRepository.findByProduct(product)
-                    .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + product.getProductId()));
-            product.setProductUnits(new HashSet<>(productUnits));
-        });
         return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
     }
 }

@@ -25,7 +25,6 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.add(customerDTO));
     }
 
-
     @GetMapping("/count")
     public ResponseEntity<Long> countCustomers() {
         return ResponseEntity.ok(customerService.countCustomers());
