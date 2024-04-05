@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/customers")
@@ -27,6 +29,11 @@ public class CustomerController {
     @GetMapping("/count")
     public ResponseEntity<Long> countCustomers() {
         return ResponseEntity.ok(customerService.countCustomers());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CustomerDTO>> searchCustomers(@RequestParam String query) {
+        return ResponseEntity.ok(customerService.searchCustomers(query));
     }
 
 }

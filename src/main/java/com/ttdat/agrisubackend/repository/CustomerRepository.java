@@ -2,8 +2,15 @@ package com.ttdat.agrisubackend.repository;
 
 import com.ttdat.agrisubackend.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String> {
+    @Query("SELECT c FROM Customer c WHERE lower(c.customerName) LIKE lower(concat('%', :query, '%')) " +
+            "OR c.phoneNumber LIKE concat(:query, '%')")
+    List<Customer> searchByNameOrPhone(@Param("query") String query);
 }

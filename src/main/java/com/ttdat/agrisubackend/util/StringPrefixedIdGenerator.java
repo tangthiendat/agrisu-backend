@@ -14,8 +14,6 @@ import java.io.Serializable;
 import java.util.Properties;
 
 
-
-
 public class StringPrefixedIdGenerator implements IdentifierGenerator {
     private String prefixValue;
     private String numberFormat;

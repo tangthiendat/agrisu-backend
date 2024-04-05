@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
 
@@ -28,6 +30,11 @@ public class CustomerService {
 
     public Long countCustomers() {
         return customerRepository.count();
+    }
+
+    public List<CustomerDTO> searchCustomers(String query){
+        List<Customer> customers = customerRepository.searchByNameOrPhone(query);
+        return customers.stream().map(customerMapper::toDTO).toList();
     }
 
 
