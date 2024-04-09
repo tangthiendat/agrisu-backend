@@ -2,7 +2,7 @@ package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.ProductUnitDTO;
 import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
-import com.ttdat.agrisubackend.model.ProductUnit;
+import com.ttdat.agrisubackend.entity.ProductUnit;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class ProductUnitService {
 
     public List<ProductUnitDTO> saveAll(Set<ProductUnitDTO> productUnitSet) {
         List<ProductUnit> productUnits = productUnitRepository.saveAll(
-                productUnitSet.stream().map(productUnitMapper::toModel).toList());
+                productUnitSet.stream().map(productUnitMapper::toProductUnit).toList());
         return productUnits.stream().map(productUnitMapper::toDTO).toList();
     }
 }

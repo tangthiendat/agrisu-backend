@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.repository;
 
-import com.ttdat.agrisubackend.model.Product;
-import com.ttdat.agrisubackend.model.ProductUnit;
+import com.ttdat.agrisubackend.entity.Product;
+import com.ttdat.agrisubackend.entity.ProductUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

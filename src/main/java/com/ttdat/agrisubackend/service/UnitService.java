@@ -2,7 +2,7 @@ package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.UnitDTO;
 import com.ttdat.agrisubackend.mapper.UnitMapper;
-import com.ttdat.agrisubackend.model.Unit;
+import com.ttdat.agrisubackend.entity.Unit;
 import com.ttdat.agrisubackend.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class UnitService {
     }
 
     public UnitDTO create(UnitDTO unitDTO) {
-        Unit savedUnit = unitRepository.save(unitMapper.toModel(unitDTO));
+        Unit savedUnit = unitRepository.save(unitMapper.toUnit(unitDTO));
         return unitMapper.toDTO(savedUnit);
     }
 }

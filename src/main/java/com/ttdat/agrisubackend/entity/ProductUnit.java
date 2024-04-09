@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.model;
+package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

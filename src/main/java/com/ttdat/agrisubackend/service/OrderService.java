@@ -1,0 +1,46 @@
+package com.ttdat.agrisubackend.service;
+
+import com.ttdat.agrisubackend.dto.OrderDTO;
+import com.ttdat.agrisubackend.entity.Order;
+import com.ttdat.agrisubackend.entity.OrderDetail;
+import com.ttdat.agrisubackend.mapper.OrderDetailMapper;
+import com.ttdat.agrisubackend.mapper.OrderMapper;
+import com.ttdat.agrisubackend.repository.OrderDetailRepository;
+import com.ttdat.agrisubackend.repository.OrderRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
+public class OrderService {
+    private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
+    private final OrderDetailRepository orderDetailsRepository;
+    private final OrderDetailMapper orderDetailMapper;
+
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper,
+                        OrderDetailRepository orderDetailsRepository, OrderDetailMapper orderDetailMapper) {
+        this.orderRepository = orderRepository;
+        this.orderMapper = orderMapper;
+        this.orderDetailsRepository = orderDetailsRepository;
+        this.orderDetailMapper = orderDetailMapper;
+    }
+
+    @Transactional
+    public OrderDTO add(OrderDTO orderDTO) {
+        Order savedOrder = orderRepository.save(orderMapper.toOrder(orderDTO));
+        Set<OrderDetail> orderDetails = orderDTO.getOrderDetails().stream()
+                .map(orderDetailMapper::toOrderDetail)
+                .peek(orderDetail -> orderDetail.setOrder(savedOrder))
+                .collect(Collectors.toSet());
+        List<OrderDetail> savedOrderDetails = orderDetailsRepository.saveAll(orderDetails);
+        savedOrder.setOrderDetails(new HashSet<>(savedOrderDetails));
+        return orderMapper.toDTO(savedOrder);
+    }
+
+}

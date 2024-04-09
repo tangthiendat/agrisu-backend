@@ -14,28 +14,23 @@ import java.io.Serializable;
 import java.util.Properties;
 
 
-
-
 public class StringPrefixedIdGenerator implements IdentifierGenerator {
-    public static final String VALUE_PREFIX_PARAMETER = "valuePrefix";
-    private String valuePrefix;
-    public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";
+    private String prefixValue;
     private String numberFormat;
-    public static final String SEQUENCE_NAME_PARAMETER = "sequenceName";
     private String sequenceName;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         String SQL_QUERY = "SELECT next_" + sequenceName + "()";
         Integer nextSeqValue = session.createNativeQuery(SQL_QUERY, Integer.class).getSingleResult();
-        return valuePrefix + String.format(numberFormat, nextSeqValue);
+        return prefixValue + String.format(numberFormat, nextSeqValue);
     }
 
     @Override
     public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
-        valuePrefix = ConfigurationHelper.getString(VALUE_PREFIX_PARAMETER, params, "");
-        numberFormat = ConfigurationHelper.getString(NUMBER_FORMAT_PARAMETER, params, "%d");
-        sequenceName = ConfigurationHelper.getString(SEQUENCE_NAME_PARAMETER, params, "hibernate_sequence");
+        prefixValue = ConfigurationHelper.getString("prefixValue", params, "");
+        numberFormat = ConfigurationHelper.getString("numberFormat", params, "%d");
+        sequenceName = ConfigurationHelper.getString("sequenceName", params, "hibernate_sequence");
     }
 
 }

@@ -2,7 +2,7 @@ package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.ProductTypeDTO;
 import com.ttdat.agrisubackend.mapper.ProductTypeMapper;
-import com.ttdat.agrisubackend.model.ProductType;
+import com.ttdat.agrisubackend.entity.ProductType;
 import com.ttdat.agrisubackend.repository.ProductTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class ProductTypeService {
     }
 
     public ProductTypeDTO create(ProductTypeDTO productTypeDTO){
-        ProductType productType = productTypeMapper.toModel(productTypeDTO);
+        ProductType productType = productTypeMapper.toProductType(productTypeDTO);
         ProductType savedProductType = productTypeRepository.save(productType);
         return productTypeMapper.toDTO(savedProductType);
     }

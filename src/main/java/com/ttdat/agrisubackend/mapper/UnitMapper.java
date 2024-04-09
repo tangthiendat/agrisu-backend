@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.UnitDTO;
-import com.ttdat.agrisubackend.model.Unit;
+import com.ttdat.agrisubackend.entity.Unit;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +13,7 @@ public class UnitMapper {
         return unitDTO;
     }
 
-    public Unit toModel(UnitDTO unitDTO){
+    public Unit toUnit(UnitDTO unitDTO){
         Unit unit = new Unit();
         unit.setUnitId(unitDTO.getUnitId());
         unit.setUnitName(unitDTO.getUnitName());
