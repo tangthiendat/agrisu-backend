@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,4 +31,6 @@ public class Customer extends BaseEntity {
     private String phoneNumber;
     private String address;
     private BigDecimal receivable;
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 }
