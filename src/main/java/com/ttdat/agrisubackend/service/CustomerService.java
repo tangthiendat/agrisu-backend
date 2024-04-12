@@ -12,21 +12,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
-    private final OrderService orderService;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
-                           OrderService orderService) {
+    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
-        this.orderService = orderService;
     }
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
@@ -34,7 +33,8 @@ public class CustomerService {
         List<Customer> customers = customerRepository.findAll(pageable).getContent();
         return customers.stream().map(customer -> {
             CustomerDTO customerDTO = customerMapper.toDTO(customer);
-            customerDTO.setTotalSales(customerRepository.findTotalSalesByCustomerId(customer.getCustomerId()));
+            BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customer.getCustomerId());
+            customerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
             return customerDTO;
         }).toList();
     }
@@ -49,7 +49,7 @@ public class CustomerService {
         return customerRepository.count();
     }
 
-    public List<CustomerDTO> searchCustomers(String query){
+    public List<CustomerDTO> searchCustomers(String query) {
         List<Customer> customers = customerRepository.searchByNameOrPhone(query);
         return customers.stream().map(customerMapper::toDTO).toList();
     }
