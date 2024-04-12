@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.OrderDTO;
 import com.ttdat.agrisubackend.entity.Order;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,11 +26,10 @@ public class OrderMapper {
         orderDTO.setPaid(order.isPaid());
         if(order.isPaid()) {
             orderDTO.setCustomerPayment(order.getCustomerPayment());
-//            orderDTO.setChange(order.getCustomerPayment().subtract(order.getTotalValue()));
         }else{
-            orderDTO.setCustomerPayment(null);
-//            orderDTO.setChange(null);
+            orderDTO.setCustomerPayment(BigDecimal.valueOf(0));
         }
+        orderDTO.setCustomerNextDebt(order.getCustomerNextDebt());
         orderDTO.setCreatedAt(order.getCreatedAt());
         orderDTO.setOrderDetails(order.getOrderDetails().stream()
                 .map(orderDetailMapper::toDTO)
@@ -45,6 +45,7 @@ public class OrderMapper {
         order.setTotalValue(orderDTO.getTotalValue());
         order.setPaid(orderDTO.isPaid());
         order.setCustomerPayment(orderDTO.getCustomerPayment());
+        order.setCustomerNextDebt(orderDTO.getCustomerNextDebt());
         return order;
     }
 }
