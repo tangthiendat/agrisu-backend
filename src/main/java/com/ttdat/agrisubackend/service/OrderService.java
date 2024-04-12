@@ -43,4 +43,11 @@ public class OrderService {
         return orderMapper.toDTO(savedOrder);
     }
 
+    public List<OrderDTO> getOrdersByCustomerId(String customerId) {
+        List<Order> orders = orderRepository.findByCustomer_CustomerId(customerId);
+        return orders.stream()
+                .map(orderMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 }

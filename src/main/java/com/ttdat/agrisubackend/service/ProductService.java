@@ -97,7 +97,7 @@ public class ProductService {
     public void delete(String id) {
         Product productToDelete = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
-        Set<ProductUnit> productUnitsToDelete = productUnitRepository.findByProduct(productToDelete)
+        Set<ProductUnit> productUnitsToDelete = productUnitRepository.findByProduct_ProductId(productToDelete.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + id));
         productUnitRepository.deleteAll(productUnitsToDelete);
         productRepository.delete(productToDelete);

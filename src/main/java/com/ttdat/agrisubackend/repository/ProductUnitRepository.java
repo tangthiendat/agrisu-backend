@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ProductUnitRepository extends JpaRepository<ProductUnit, Integer> {
-    Optional<Set<ProductUnit>> findByProduct(Product product);
+    Optional<Set<ProductUnit>> findByProduct_ProductId(String productId);
 }

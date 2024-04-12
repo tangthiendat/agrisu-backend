@@ -20,6 +20,12 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<CustomerDTO>> getCustomers(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(customerService.getPaginatedCustomers(page, pageSize));
+    }
+
     @PostMapping
     public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerDTO customerDTO) {
         return ResponseEntity.ok(customerService.add(customerDTO));
