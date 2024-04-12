@@ -34,7 +34,7 @@ public class CustomerService {
         List<Customer> customers = customerRepository.findAll(pageable).getContent();
         return customers.stream().map(customer -> {
             CustomerDTO customerDTO = customerMapper.toDTO(customer);
-            customerDTO.setOrders(orderService.getOrdersByCustomerId(customer.getCustomerId()));
+            customerDTO.setTotalSales(customerRepository.findTotalSalesByCustomerId(customer.getCustomerId()));
             return customerDTO;
         }).toList();
     }

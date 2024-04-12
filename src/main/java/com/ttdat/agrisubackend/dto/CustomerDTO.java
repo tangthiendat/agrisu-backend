@@ -13,5 +13,5 @@ public class CustomerDTO {
     private String phoneNumber;
     private String address;
     private BigDecimal receivable;
-    private List<OrderDTO> orders;
+    private BigDecimal totalSales;
 }

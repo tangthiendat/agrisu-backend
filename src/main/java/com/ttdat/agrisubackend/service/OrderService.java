@@ -10,7 +10,6 @@ import com.ttdat.agrisubackend.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +43,7 @@ public class OrderService {
     }
 
     public List<OrderDTO> getOrdersByCustomerId(String customerId) {
-        List<Order> orders = orderRepository.findByCustomer_CustomerId(customerId);
+        List<Order> orders = orderRepository.findByCustomerId(customerId);
         return orders.stream()
                 .map(orderMapper::toDTO)
                 .collect(Collectors.toList());
