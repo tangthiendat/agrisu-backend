@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -43,6 +44,21 @@ public class CustomerService {
     public CustomerDTO add(CustomerDTO customerDTO) {
         Customer savedCustomer = customerRepository.save(customerMapper.toCustomer(customerDTO));
         return customerMapper.toDTO(savedCustomer);
+    }
+
+    @Transactional
+    public CustomerDTO update(String id, CustomerDTO customerDTO) {
+        Customer customerToUpdate = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
+        Customer convertedCustomer = customerMapper.toCustomer(customerDTO);
+        customerToUpdate.setCustomerName(convertedCustomer.getCustomerName());
+        customerToUpdate.setPhoneNumber(convertedCustomer.getPhoneNumber());
+        customerToUpdate.setAddress(convertedCustomer.getAddress());
+        customerToUpdate.setReceivable(convertedCustomer.getReceivable());
+        CustomerDTO updatedCustomerDTO = customerMapper.toDTO(customerRepository.save(customerToUpdate));
+        BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customerToUpdate.getCustomerId());
+        updatedCustomerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
+        return updatedCustomerDTO;
     }
 
     public Long countCustomers() {

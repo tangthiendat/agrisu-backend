@@ -31,6 +31,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.add(customerDTO));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerDTO customer, @PathVariable String id) {
+        return ResponseEntity.ok(customerService.update(id, customer));
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long> countCustomers() {
         return ResponseEntity.ok(customerService.countCustomers());
