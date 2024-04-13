@@ -1,9 +1,13 @@
 package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.CustomerDTO;
+import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,11 +24,14 @@ import java.util.Objects;
 @Service
 public class CustomerService {
 
+    @PersistenceContext
+    private final EntityManager entityManager;
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+    public CustomerService(EntityManager entityManager, CustomerRepository customerRepository, CustomerMapper customerMapper) {
+        this.entityManager = entityManager;
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
     }
@@ -70,5 +77,8 @@ public class CustomerService {
         return customers.stream().map(customerMapper::toDTO).toList();
     }
 
+    public CustomersSummary getCustomersSummary() {
+        return customerRepository.getCustomersSummary();
+    }
 
 }
