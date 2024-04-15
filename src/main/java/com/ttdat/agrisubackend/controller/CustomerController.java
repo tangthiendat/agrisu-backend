@@ -38,6 +38,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.update(id, customer));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
+        customerService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long> countCustomers() {
         return ResponseEntity.ok(customerService.countCustomers());

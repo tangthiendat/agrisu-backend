@@ -31,6 +31,8 @@ public class Customer extends BaseEntity {
     private String phoneNumber;
     private String address;
     private BigDecimal receivable;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<Order> orders;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    private Set<Receipt> receipts;
 }

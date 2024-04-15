@@ -5,6 +5,7 @@ import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
+import com.ttdat.agrisubackend.repository.ReceiptRepository;
 import com.ttdat.agrisubackend.repository.mapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
@@ -26,13 +27,15 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final CustomerDbMapper customerDbMapper;
+    private final ReceiptRepository receiptRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
-                            CustomerDbMapper customerDbMapper) {
+                            CustomerDbMapper customerDbMapper, ReceiptRepository receiptRepository) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.customerDbMapper = customerDbMapper;
+        this.receiptRepository = receiptRepository;
     }
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
@@ -65,6 +68,14 @@ public class CustomerService {
         BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customerToUpdate.getCustomerId());
         updatedCustomerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
         return updatedCustomerDTO;
+    }
+
+    @Transactional
+    public void delete(String id) {
+        Customer customerToDelete = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
+       customerRepository.delete(customerToDelete);
+
     }
 
     public Long countCustomers() {
