@@ -37,6 +37,6 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "product_type_id", referencedColumnName = "productTypeId")
     private ProductType productType;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private Set<ProductUnit> productUnits;
 }

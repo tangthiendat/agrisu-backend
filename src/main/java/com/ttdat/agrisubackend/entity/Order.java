@@ -40,6 +40,8 @@ public class Order extends BaseEntity{
 
     private BigDecimal customerPayment;
 
-    @OneToMany(mappedBy = "order")
+    private BigDecimal customerNextDebt;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private Set<OrderDetail> orderDetails;
 }

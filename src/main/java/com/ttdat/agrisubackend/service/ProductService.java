@@ -64,16 +64,26 @@ public class ProductService {
         List<ProductUnit> productUnitsToDelete = new ArrayList<>();
         // Delete product units that are not in the newProductUnits if
         // there is less product units in newProductUnits
-        if (newProductUnits.size() < originalProductUnits.size()) {
-            for (ProductUnit productUnit : originalProductUnits) {
-                if (newProductUnits.stream().noneMatch(unit -> unit.getId().equals(productUnit.getId()))) {
-                    productUnitsToDelete.add(productUnit);
-                    newProductUnits.removeIf(newProductUnit -> newProductUnit.getId().equals(productUnit.getId()));
-                }
+        for (ProductUnit productUnit : originalProductUnits) {
+            boolean isNotInNewProductUnits = newProductUnits.stream()
+                    .noneMatch(newProductUnit -> {
+                        if (newProductUnit.getId() != null) {
+                            return newProductUnit.getId().equals(productUnit.getId());
+                        }
+                        return false;
+                    });
+            if (isNotInNewProductUnits) {
+                productUnitsToDelete.add(productUnit);
+                newProductUnits.removeIf(newProductUnit -> {
+                    if (newProductUnit.getId() != null) {
+                        return newProductUnit.getId().equals(productUnit.getId());
+                    }
+                    return false;
+                });
             }
-            if (!productUnitsToDelete.isEmpty()) {
-                productUnitRepository.deleteAll(productUnitsToDelete);
-            }
+        }
+        if (!productUnitsToDelete.isEmpty()) {
+            productUnitRepository.deleteAll(productUnitsToDelete);
         }
         // Save new product units
         List<ProductUnit> productUnitsToSave = new ArrayList<>(newProductUnits);
@@ -87,9 +97,6 @@ public class ProductService {
     public void delete(String id) {
         Product productToDelete = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
-        Set<ProductUnit> productUnitsToDelete = productUnitRepository.findByProduct(productToDelete)
-                .orElseThrow(() -> new ResourceNotFoundException("Product units not found for product with id: " + id));
-        productUnitRepository.deleteAll(productUnitsToDelete);
         productRepository.delete(productToDelete);
     }
 
