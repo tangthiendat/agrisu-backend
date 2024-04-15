@@ -1,5 +1,6 @@
 package com.ttdat.agrisubackend.repository;
 
+import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

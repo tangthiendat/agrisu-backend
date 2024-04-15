@@ -1,6 +1,7 @@
 package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.CustomerDTO;
+import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,11 @@ public class CustomerController {
     @GetMapping("/summary")
     public ResponseEntity<CustomersSummary> getCustomersSummary() {
         return ResponseEntity.ok(customerService.getCustomersSummary());
+    }
+
+    @GetMapping("/{id}/history")
+    public ResponseEntity<List<CustomerHistory>> getCustomerHistory(@PathVariable String id) {
+        return ResponseEntity.ok(customerService.getCustomerHistory(id));
     }
 
 }

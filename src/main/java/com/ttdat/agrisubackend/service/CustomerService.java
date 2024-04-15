@@ -1,13 +1,12 @@
 package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.CustomerDTO;
+import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
+import com.ttdat.agrisubackend.repository.mapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.StoredProcedureQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,16 +23,16 @@ import java.util.Objects;
 @Service
 public class CustomerService {
 
-    @PersistenceContext
-    private final EntityManager entityManager;
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final CustomerDbMapper customerDbMapper;
 
     @Autowired
-    public CustomerService(EntityManager entityManager, CustomerRepository customerRepository, CustomerMapper customerMapper) {
-        this.entityManager = entityManager;
+    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
+                            CustomerDbMapper customerDbMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
+        this.customerDbMapper = customerDbMapper;
     }
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
@@ -79,6 +78,11 @@ public class CustomerService {
 
     public CustomersSummary getCustomersSummary() {
         return customerRepository.getCustomersSummary();
+    }
+
+    public List<CustomerHistory> getCustomerHistory(String customerId) {
+        return customerDbMapper.getCustomerHistory(customerId);
+
     }
 
 }
