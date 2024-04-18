@@ -32,10 +32,7 @@ public class Product extends BaseEntity {
     private String productName;
 
     private int stockQuantity;
-
-    @ManyToOne
-    @JoinColumn(name = "product_type_id", referencedColumnName = "productTypeId")
-    private ProductType productType;
+    
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private Set<ProductUnit> productUnits;

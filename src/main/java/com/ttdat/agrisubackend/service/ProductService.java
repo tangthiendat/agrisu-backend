@@ -55,7 +55,6 @@ public class ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
         Product convertedProduct = productMapper.toProduct(productDTO);
         productToUpdate.setProductName(convertedProduct.getProductName());
-        productToUpdate.setProductType(convertedProduct.getProductType());
         productToUpdate.setStockQuantity(convertedProduct.getStockQuantity());
         Product updatedProduct = productRepository.save(productToUpdate);
 
