@@ -84,7 +84,12 @@ public class CustomerService {
 
     public List<CustomerDTO> searchCustomers(String query) {
         List<Customer> customers = customerRepository.searchByNameOrPhone(query);
-        return customers.stream().map(customerMapper::toDTO).toList();
+        return customers.stream().map(customer -> {
+            CustomerDTO customerDTO = customerMapper.toDTO(customer);
+            BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customer.getCustomerId());
+            customerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
+            return customerDTO;
+        }).toList();
     }
 
     public CustomersSummary getCustomersSummary() {
