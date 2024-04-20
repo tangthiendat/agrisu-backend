@@ -5,6 +5,7 @@ import com.ttdat.agrisubackend.entity.Receipt;
 import com.ttdat.agrisubackend.mapper.ReceiptMapper;
 import com.ttdat.agrisubackend.repository.ReceiptRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReceiptService {
@@ -17,6 +18,7 @@ public class ReceiptService {
         this.receiptMapper = receiptMapper;
     }
 
+    @Transactional
     public ReceiptDTO add(ReceiptDTO receiptDTO) {
         Receipt savedReceipt = receiptRepository.save(receiptMapper.toReceipt(receiptDTO));
         return receiptMapper.toDTO(savedReceipt);

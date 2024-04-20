@@ -7,7 +7,7 @@ import com.ttdat.agrisubackend.mapper.OrderDetailMapper;
 import com.ttdat.agrisubackend.mapper.OrderMapper;
 import com.ttdat.agrisubackend.repository.OrderDetailRepository;
 import com.ttdat.agrisubackend.repository.OrderRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
