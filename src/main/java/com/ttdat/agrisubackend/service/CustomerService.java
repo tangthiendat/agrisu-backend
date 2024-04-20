@@ -38,12 +38,7 @@ public class CustomerService {
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         List<Customer> customers = customerRepository.findAll(pageable).getContent();
-        return customers.stream().map(customer -> {
-            CustomerDTO customerDTO = customerMapper.toDTO(customer);
-            BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customer.getCustomerId());
-            customerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
-            return customerDTO;
-        }).toList();
+        return customers.stream().map(customerMapper::toDTO).toList();
     }
 
     @Transactional
@@ -61,10 +56,7 @@ public class CustomerService {
         customerToUpdate.setPhoneNumber(convertedCustomer.getPhoneNumber());
         customerToUpdate.setAddress(convertedCustomer.getAddress());
         customerToUpdate.setReceivable(convertedCustomer.getReceivable());
-        CustomerDTO updatedCustomerDTO = customerMapper.toDTO(customerRepository.save(customerToUpdate));
-        BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customerToUpdate.getCustomerId());
-        updatedCustomerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
-        return updatedCustomerDTO;
+        return customerMapper.toDTO(customerRepository.save(customerToUpdate));
     }
 
     @Transactional
@@ -81,12 +73,7 @@ public class CustomerService {
 
     public List<CustomerDTO> searchCustomers(String query) {
         List<Customer> customers = customerRepository.searchByNameOrPhone(query);
-        return customers.stream().map(customer -> {
-            CustomerDTO customerDTO = customerMapper.toDTO(customer);
-            BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customer.getCustomerId());
-            customerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
-            return customerDTO;
-        }).toList();
+        return customers.stream().map(customerMapper::toDTO).toList();
     }
 
     public CustomersSummary getCustomersSummary() {
@@ -95,7 +82,6 @@ public class CustomerService {
 
     public List<CustomerHistory> getCustomerHistory(String customerId) {
         return customerDbMapper.getCustomerHistory(customerId);
-
     }
 
 }
