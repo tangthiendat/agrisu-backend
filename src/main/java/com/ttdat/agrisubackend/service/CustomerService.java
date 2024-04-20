@@ -5,7 +5,6 @@ import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
-import com.ttdat.agrisubackend.repository.ReceiptRepository;
 import com.ttdat.agrisubackend.repository.mapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
@@ -27,15 +26,13 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final CustomerDbMapper customerDbMapper;
-    private final ReceiptRepository receiptRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
-                            CustomerDbMapper customerDbMapper, ReceiptRepository receiptRepository) {
+                            CustomerDbMapper customerDbMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.customerDbMapper = customerDbMapper;
-        this.receiptRepository = receiptRepository;
     }
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
