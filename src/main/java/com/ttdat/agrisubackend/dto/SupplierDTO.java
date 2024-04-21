@@ -11,5 +11,4 @@ public class SupplierDTO {
     String phoneNumber;
     String address;
     BigDecimal payable;
-    BigDecimal totalPurchase;
 }

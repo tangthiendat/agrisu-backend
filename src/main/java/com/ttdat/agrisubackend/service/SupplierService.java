@@ -7,6 +7,8 @@ import com.ttdat.agrisubackend.repository.SupplierRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class SupplierService {
 
@@ -22,6 +24,11 @@ public class SupplierService {
     public SupplierDTO add(SupplierDTO supplierDTO) {
         Supplier savedSupplier = supplierRepository.save(supplierMapper.toSupplier(supplierDTO));
         return supplierMapper.toDTO(savedSupplier);
+    }
+
+    public List<SupplierDTO> searchSuppliers(String query){
+        List<Supplier> suppliers = supplierRepository.searchByNameOrPhone(query);
+        return suppliers.stream().map(supplierMapper::toDTO).toList();
     }
 
 }
