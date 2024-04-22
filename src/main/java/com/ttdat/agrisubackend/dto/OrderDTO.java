@@ -16,6 +16,7 @@ public class OrderDTO {
     @JsonProperty("isPaid")
     private boolean isPaid;
     private BigDecimal customerPayment;
+    private BigDecimal customerCurrentDebt;
     private BigDecimal customerNextDebt;
     private Set<OrderDetailDTO> orderDetails;
 }

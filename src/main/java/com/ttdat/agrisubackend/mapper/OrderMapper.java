@@ -29,6 +29,7 @@ public class OrderMapper {
         }else{
             orderDTO.setCustomerPayment(BigDecimal.valueOf(0));
         }
+        orderDTO.setCustomerCurrentDebt(order.getCustomerCurrentDebt());
         orderDTO.setCustomerNextDebt(order.getCustomerNextDebt());
         orderDTO.setCreatedAt(order.getCreatedAt());
         orderDTO.setOrderDetails(order.getOrderDetails().stream()
@@ -45,6 +46,7 @@ public class OrderMapper {
         order.setTotalValue(orderDTO.getTotalValue());
         order.setPaid(orderDTO.isPaid());
         order.setCustomerPayment(orderDTO.getCustomerPayment());
+        order.setCustomerCurrentDebt(orderDTO.getCustomerCurrentDebt());
         order.setCustomerNextDebt(orderDTO.getCustomerNextDebt());
         return order;
     }
