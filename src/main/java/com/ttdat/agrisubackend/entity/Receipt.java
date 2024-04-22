@@ -20,8 +20,9 @@ public class Receipt extends BaseEntity {
             strategy = "com.ttdat.agrisubackend.util.StringPrefixedIdGenerator",
             parameters = {
                     @Parameter(name = "sequenceName", value = "receipt_id_seq"),
-                    @Parameter(name = "prefixValue", value = "PT"),
-                    @Parameter(name = "numberFormat", value = "%06d")
+                    @Parameter(name = "prefixValue", value = "T"),
+                    @Parameter(name = "numberFormat", value = "%05d"),
+                    @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
     private String receiptId;
