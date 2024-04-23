@@ -4,7 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 application.properties
-database/
+agrisu_db.sql
 
 ### STS ###
 .apt_generated

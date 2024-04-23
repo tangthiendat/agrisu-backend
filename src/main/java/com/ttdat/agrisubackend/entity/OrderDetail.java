@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class OrderDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native")
     private Long id;
 
