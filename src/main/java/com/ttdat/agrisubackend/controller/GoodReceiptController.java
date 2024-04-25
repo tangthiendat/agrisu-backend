@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/good-receipts")
 public class GoodReceiptController {
     private final GoodReceiptService goodReceiptService;
