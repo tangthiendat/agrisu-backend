@@ -25,7 +25,7 @@ public class Order extends BaseEntity{
             parameters = {
                     @Parameter(name = "sequenceName", value = "order_id_seq"),
                     @Parameter(name = "prefixValue", value = "L"),
-                    @Parameter(name = "numberFormat", value = "%05d"),
+                    @Parameter(name = "numberFormat", value = "%06d"),
                     @Parameter(name = "hasYearPrefix", value = "true")
             }
     )

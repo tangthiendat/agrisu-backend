@@ -22,7 +22,7 @@ public class GoodReceipt extends BaseEntity{
             parameters = {
                     @Parameter(name = "sequenceName", value = "good_receipt_id_seq"),
                     @Parameter(name = "prefixValue", value = "N"),
-                    @Parameter(name = "numberFormat", value = "%05d"),
+                    @Parameter(name = "numberFormat", value = "%06d"),
                     @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
