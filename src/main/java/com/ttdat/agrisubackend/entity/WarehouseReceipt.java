@@ -12,21 +12,21 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "good_receipts")
-public class GoodReceipt extends BaseEntity{
+@Table(name = "warehouse_receipts")
+public class WarehouseReceipt extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "good_receipt_id_generator")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "warehouse_receipt_id_generator")
     @GenericGenerator(
-            name = "good_receipt_id_generator",
+            name = "warehouse_receipt_id_generator",
             strategy = "com.ttdat.agrisubackend.util.StringPrefixedIdGenerator",
             parameters = {
-                    @Parameter(name = "sequenceName", value = "good_receipt_id_seq"),
+                    @Parameter(name = "sequenceName", value = "warehouse_receipt_id_seq"),
                     @Parameter(name = "prefixValue", value = "N"),
                     @Parameter(name = "numberFormat", value = "%06d"),
                     @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
-    private String goodReceiptId;
+    private String warehouseReceiptId;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
@@ -38,6 +38,6 @@ public class GoodReceipt extends BaseEntity{
 
     private BigDecimal supplierNextDebt;
 
-    @OneToMany(mappedBy = "goodReceipt")
-    private Set<GoodReceiptDetail> goodReceiptDetails;
+    @OneToMany(mappedBy = "warehouseReceipt")
+    private Set<WarehouseReceiptDetail> warehouseReceiptDetails;
 }

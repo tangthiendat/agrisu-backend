@@ -3,7 +3,6 @@ package com.ttdat.agrisubackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
@@ -11,16 +10,16 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "good_receipt_details")
-public class GoodReceiptDetail {
+@Table(name = "warehouse_receipt_details")
+public class WarehouseReceiptDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "good_receipt_id", nullable = false)
-    private GoodReceipt goodReceipt;
+    @JoinColumn(name = "warehouse_receipt_id", nullable = false)
+    private WarehouseReceipt warehouseReceipt;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
