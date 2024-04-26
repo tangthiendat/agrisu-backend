@@ -5,7 +5,7 @@ import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
-import com.ttdat.agrisubackend.repository.mapper.CustomerDbMapper;
+import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CustomerService {
