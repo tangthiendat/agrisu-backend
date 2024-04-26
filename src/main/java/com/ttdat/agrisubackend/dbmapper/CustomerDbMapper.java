@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.repository.mapper;
+package com.ttdat.agrisubackend.dbmapper;
 
 import com.ttdat.agrisubackend.dto.CustomerHistory;
 import org.apache.ibatis.annotations.Mapper;

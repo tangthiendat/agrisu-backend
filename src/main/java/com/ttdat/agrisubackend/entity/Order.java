@@ -24,8 +24,9 @@ public class Order extends BaseEntity{
             strategy = "com.ttdat.agrisubackend.util.StringPrefixedIdGenerator",
             parameters = {
                     @Parameter(name = "sequenceName", value = "order_id_seq"),
-                    @Parameter(name = "prefixValue", value = "HD"),
-                    @Parameter(name = "numberFormat", value = "%06d")
+                    @Parameter(name = "prefixValue", value = "L"),
+                    @Parameter(name = "numberFormat", value = "%06d"),
+                    @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
     private String orderId;
@@ -39,6 +40,8 @@ public class Order extends BaseEntity{
     private boolean isPaid;
 
     private BigDecimal customerPayment;
+
+    private BigDecimal customerCurrentDebt;
 
     private BigDecimal customerNextDebt;
 

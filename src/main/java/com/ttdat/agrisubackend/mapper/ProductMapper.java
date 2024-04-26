@@ -11,12 +11,10 @@ import java.util.stream.Collectors;
 @Component
 public class ProductMapper {
 
-    private final ProductTypeMapper productTypeMapper;
     private final ProductUnitMapper productUnitMapper;
 
     @Autowired
-    public ProductMapper(ProductTypeMapper productTypeMapper, ProductUnitMapper productUnitMapper) {
-        this.productTypeMapper = productTypeMapper;
+    public ProductMapper(ProductUnitMapper productUnitMapper) {
         this.productUnitMapper = productUnitMapper;
     }
 
@@ -24,7 +22,6 @@ public class ProductMapper {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductId(product.getProductId());
         productDTO.setProductName(product.getProductName());
-        productDTO.setProductType(productTypeMapper.toDTO(product.getProductType()));
         productDTO.setStockQuantity(product.getStockQuantity());
         productDTO.setProductUnits(product.getProductUnits().stream().map(productUnitMapper::toDTO)
                 .collect(Collectors.toList()));
@@ -40,7 +37,6 @@ public class ProductMapper {
         Product product = new Product();
         product.setProductId(productDTO.getProductId());
         product.setProductName(productDTO.getProductName());
-        product.setProductType(productTypeMapper.toProductType(productDTO.getProductType()));
         product.setStockQuantity(productDTO.getStockQuantity());
         product.setProductUnits(productDTO.getProductUnits().stream().map(productUnitMapper::toProductUnit)
                 .collect(Collectors.toSet()));

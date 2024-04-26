@@ -7,7 +7,7 @@ import com.ttdat.agrisubackend.entity.Product;
 import com.ttdat.agrisubackend.entity.ProductUnit;
 import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.data.domain.PageRequest;
@@ -55,7 +55,6 @@ public class ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
         Product convertedProduct = productMapper.toProduct(productDTO);
         productToUpdate.setProductName(convertedProduct.getProductName());
-        productToUpdate.setProductType(convertedProduct.getProductType());
         productToUpdate.setStockQuantity(convertedProduct.getStockQuantity());
         Product updatedProduct = productRepository.save(productToUpdate);
 

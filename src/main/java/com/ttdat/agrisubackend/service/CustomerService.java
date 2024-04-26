@@ -5,8 +5,7 @@ import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
-import com.ttdat.agrisubackend.repository.ReceiptRepository;
-import com.ttdat.agrisubackend.repository.mapper.CustomerDbMapper;
+import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CustomerService {
@@ -27,26 +24,19 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final CustomerDbMapper customerDbMapper;
-    private final ReceiptRepository receiptRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
-                            CustomerDbMapper customerDbMapper, ReceiptRepository receiptRepository) {
+                            CustomerDbMapper customerDbMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.customerDbMapper = customerDbMapper;
-        this.receiptRepository = receiptRepository;
     }
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         List<Customer> customers = customerRepository.findAll(pageable).getContent();
-        return customers.stream().map(customer -> {
-            CustomerDTO customerDTO = customerMapper.toDTO(customer);
-            BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customer.getCustomerId());
-            customerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
-            return customerDTO;
-        }).toList();
+        return customers.stream().map(customerMapper::toDTO).toList();
     }
 
     @Transactional
@@ -64,10 +54,7 @@ public class CustomerService {
         customerToUpdate.setPhoneNumber(convertedCustomer.getPhoneNumber());
         customerToUpdate.setAddress(convertedCustomer.getAddress());
         customerToUpdate.setReceivable(convertedCustomer.getReceivable());
-        CustomerDTO updatedCustomerDTO = customerMapper.toDTO(customerRepository.save(customerToUpdate));
-        BigDecimal totalSales = customerRepository.findTotalSalesByCustomerId(customerToUpdate.getCustomerId());
-        updatedCustomerDTO.setTotalSales(Objects.requireNonNullElse(totalSales, BigDecimal.ZERO));
-        return updatedCustomerDTO;
+        return customerMapper.toDTO(customerRepository.save(customerToUpdate));
     }
 
     @Transactional
@@ -93,7 +80,6 @@ public class CustomerService {
 
     public List<CustomerHistory> getCustomerHistory(String customerId) {
         return customerDbMapper.getCustomerHistory(customerId);
-
     }
 
 }
