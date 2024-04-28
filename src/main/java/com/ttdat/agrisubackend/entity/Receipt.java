@@ -31,10 +31,10 @@ public class Receipt extends BaseEntity {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column( nullable = false, precision = 15, scale = 2)
+    private BigDecimal customerCurrentDebt;
+
     private BigDecimal paidAmount;
 
-    @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal customerNextDebt;
 
 }

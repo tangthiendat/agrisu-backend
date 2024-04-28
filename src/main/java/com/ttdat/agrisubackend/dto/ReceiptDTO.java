@@ -10,6 +10,7 @@ public class ReceiptDTO {
     private String receiptId;
     private LocalDateTime createdAt;
     private CustomerDTO customer;
+    private BigDecimal customerCurrentDebt;
     private BigDecimal paidAmount;
     private BigDecimal customerNextDebt;
 }
