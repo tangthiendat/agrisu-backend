@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
-public class GoodReceiptDTO {
-    private String goodReceiptId;
+public class WarehouseReceiptDTO {
+    private String warehouseReceiptId;
     private LocalDateTime createdAt;
     private SupplierDTO supplier;
     private BigDecimal totalValue;
     private BigDecimal supplierCurrentDebt;
     private BigDecimal supplierNextDebt;
-    private Set<GoodReceiptDetailDTO> goodReceiptDetails;
+    private Set<WarehouseReceiptDetailDTO> warehouseReceiptDetails;
 }

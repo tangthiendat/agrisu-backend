@@ -17,6 +17,8 @@ public class CustomerHistory {
     private String id;
     private LocalDateTime createdAt;
     private String type;
+    private BigDecimal currentDebt;
     private BigDecimal value;
+    private BigDecimal payment;
     private BigDecimal nextDebt;
 }

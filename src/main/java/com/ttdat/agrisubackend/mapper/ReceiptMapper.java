@@ -17,6 +17,7 @@ public class ReceiptMapper {
         ReceiptDTO receiptDTO = new ReceiptDTO();
         receiptDTO.setReceiptId(receipt.getReceiptId());
         receiptDTO.setCustomer(customerMapper.toDTO(receipt.getCustomer()));
+        receiptDTO.setCustomerCurrentDebt(receipt.getCustomerCurrentDebt());
         receiptDTO.setPaidAmount(receipt.getPaidAmount());
         receiptDTO.setCustomerNextDebt(receipt.getCustomerNextDebt());
         receiptDTO.setCreatedAt(receipt.getCreatedAt());
@@ -27,6 +28,7 @@ public class ReceiptMapper {
         Receipt receipt = new Receipt();
         receipt.setReceiptId(receiptDTO.getReceiptId());
         receipt.setCustomer(customerMapper.toCustomer(receiptDTO.getCustomer()));
+        receipt.setCustomerCurrentDebt(receiptDTO.getCustomerCurrentDebt());
         receipt.setPaidAmount(receiptDTO.getPaidAmount());
         receipt.setCustomerNextDebt(receiptDTO.getCustomerNextDebt());
         return receipt;

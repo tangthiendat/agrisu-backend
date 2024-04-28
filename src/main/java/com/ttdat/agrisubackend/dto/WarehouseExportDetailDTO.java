@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class GoodReceiptDetailDTO {
+public class WarehouseExportDetailDTO {
     private Long id;
     private ProductDTO product;
     private UnitDTO unit;

@@ -6,9 +6,10 @@ import java.math.BigDecimal;
 
 @Data
 public class SupplierDTO {
-    String supplierId;
-    String supplierName;
-    String phoneNumber;
-    String address;
-    BigDecimal payable;
+    private String supplierId;
+    private String supplierName;
+    private String phoneNumber;
+    private String address;
+    private String taxCode;
+    private BigDecimal payable;
 }
