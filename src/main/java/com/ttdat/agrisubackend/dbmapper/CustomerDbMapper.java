@@ -11,11 +11,13 @@ import java.util.List;
 @Mapper
 public interface CustomerDbMapper {
     @Select("""
-            SELECT o.order_id as id, o.created_at as createdAt, 'Mua hàng' as type, o.total_value as value, o.customer_next_debt as nextDebt
-            FROM orders o
-            WHERE o.customer_id = #{customerId}
+            SELECT we.warehouse_export_id as id, we.created_at as createdAt, 'WAREHOUSE_EXPORT' as type,
+            we.customer_current_debt as currentDebt, we.total_value as value, 0 as payment, we.customer_next_debt as nextDebt
+            FROM warehouse_exports we
+            WHERE we.customer_id = #{customerId}
             UNION
-            SELECT r.receipt_id as id, r.created_at as createdAt, 'Thanh toán' as type, (r.paid_amount * -1) as value, r.customer_next_debt as nextDebt
+            SELECT r.receipt_id as id, r.created_at as createdAt, 'RECEIPT' as type, 
+            r.customer_current_debt as currentDebt, 0 as value, r.paid_amount as payment, r.customer_next_debt as nextDebt
             FROM receipts r
             WHERE r.customer_id = #{customerId}
             ORDER BY createdAt DESC
