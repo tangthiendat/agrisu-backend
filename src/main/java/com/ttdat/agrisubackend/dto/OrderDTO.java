@@ -13,10 +13,6 @@ public class OrderDTO {
     private LocalDateTime createdAt;
     private CustomerDTO customer;
     private BigDecimal totalValue;
-    @JsonProperty("isPaid")
-    private boolean isPaid;
     private BigDecimal customerPayment;
-    private BigDecimal customerCurrentDebt;
-    private BigDecimal customerNextDebt;
     private Set<OrderDetailDTO> orderDetails;
 }

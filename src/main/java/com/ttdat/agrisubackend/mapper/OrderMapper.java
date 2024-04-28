@@ -23,19 +23,11 @@ public class OrderMapper {
         orderDTO.setOrderId(order.getOrderId());
         orderDTO.setCustomer(customerMapper.toDTO(order.getCustomer()));
         orderDTO.setTotalValue(order.getTotalValue());
-        orderDTO.setPaid(order.isPaid());
-        if(order.isPaid()) {
-            orderDTO.setCustomerPayment(order.getCustomerPayment());
-        }else{
-            orderDTO.setCustomerPayment(BigDecimal.valueOf(0));
-        }
-        orderDTO.setCustomerCurrentDebt(order.getCustomerCurrentDebt());
-        orderDTO.setCustomerNextDebt(order.getCustomerNextDebt());
+        orderDTO.setCustomerPayment(order.getCustomerPayment());
         orderDTO.setCreatedAt(order.getCreatedAt());
         orderDTO.setOrderDetails(order.getOrderDetails().stream()
                 .map(orderDetailMapper::toDTO)
                 .collect(Collectors.toSet()));
-
         return orderDTO;
     }
 
@@ -44,10 +36,7 @@ public class OrderMapper {
         order.setOrderId(orderDTO.getOrderId());
         order.setCustomer(customerMapper.toCustomer(orderDTO.getCustomer()));
         order.setTotalValue(orderDTO.getTotalValue());
-        order.setPaid(orderDTO.isPaid());
         order.setCustomerPayment(orderDTO.getCustomerPayment());
-        order.setCustomerCurrentDebt(orderDTO.getCustomerCurrentDebt());
-        order.setCustomerNextDebt(orderDTO.getCustomerNextDebt());
         return order;
     }
 }
