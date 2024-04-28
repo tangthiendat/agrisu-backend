@@ -24,7 +24,7 @@ public class WarehouseReceiptDetailMapper {
         return warehouseReceiptDetailDTO;
     }
 
-    public WarehouseReceiptDetail toGoodReceiptDetail(WarehouseReceiptDetailDTO warehouseReceiptDetailDTO) {
+    public WarehouseReceiptDetail toWarehouseReceiptDetail(WarehouseReceiptDetailDTO warehouseReceiptDetailDTO) {
         WarehouseReceiptDetail warehouseReceiptDetail = new WarehouseReceiptDetail();
         warehouseReceiptDetail.setId(warehouseReceiptDetailDTO.getId());
         warehouseReceiptDetail.setProduct(productMapper.toProduct(warehouseReceiptDetailDTO.getProduct()));

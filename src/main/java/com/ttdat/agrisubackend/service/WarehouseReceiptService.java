@@ -5,8 +5,8 @@ import com.ttdat.agrisubackend.entity.WarehouseReceipt;
 import com.ttdat.agrisubackend.entity.WarehouseReceiptDetail;
 import com.ttdat.agrisubackend.mapper.WarehouseReceiptDetailMapper;
 import com.ttdat.agrisubackend.mapper.WarehouseReceiptMapper;
-import com.ttdat.agrisubackend.repository.GoodReceiptDetailRepository;
-import com.ttdat.agrisubackend.repository.GoodReceiptRepository;
+import com.ttdat.agrisubackend.repository.WarehouseReceiptDetailRepository;
+import com.ttdat.agrisubackend.repository.WarehouseReceiptRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,27 +17,27 @@ import java.util.stream.Collectors;
 
 @Service
 public class WarehouseReceiptService {
-    private final GoodReceiptRepository goodReceiptRepository;
+    private final WarehouseReceiptRepository warehouseReceiptRepository;
     private final WarehouseReceiptMapper warehouseReceiptMapper;
-    private final GoodReceiptDetailRepository goodReceiptDetailRepository;
+    private final WarehouseReceiptDetailRepository warehouseReceiptDetailRepository;
     private final WarehouseReceiptDetailMapper warehouseReceiptDetailMapper;
 
-    public WarehouseReceiptService(GoodReceiptRepository goodReceiptRepository, WarehouseReceiptMapper warehouseReceiptMapper,
-                                   GoodReceiptDetailRepository goodReceiptDetailRepository, WarehouseReceiptDetailMapper warehouseReceiptDetailMapper) {
-        this.goodReceiptRepository = goodReceiptRepository;
+    public WarehouseReceiptService(WarehouseReceiptRepository warehouseReceiptRepository, WarehouseReceiptMapper warehouseReceiptMapper,
+                                   WarehouseReceiptDetailRepository warehouseReceiptDetailRepository, WarehouseReceiptDetailMapper warehouseReceiptDetailMapper) {
+        this.warehouseReceiptRepository = warehouseReceiptRepository;
         this.warehouseReceiptMapper = warehouseReceiptMapper;
-        this.goodReceiptDetailRepository = goodReceiptDetailRepository;
+        this.warehouseReceiptDetailRepository = warehouseReceiptDetailRepository;
         this.warehouseReceiptDetailMapper = warehouseReceiptDetailMapper;
     }
 
     @Transactional
     public WarehouseReceiptDTO add(WarehouseReceiptDTO warehouseReceiptDTO) {
-        WarehouseReceipt savedWarehouseReceipt = goodReceiptRepository.save(warehouseReceiptMapper.toGoodReceipt(warehouseReceiptDTO));
+        WarehouseReceipt savedWarehouseReceipt = warehouseReceiptRepository.save(warehouseReceiptMapper.toWarehouseReceipt(warehouseReceiptDTO));
         Set<WarehouseReceiptDetail> warehouseReceiptDetails = warehouseReceiptDTO.getWarehouseReceiptDetails().stream()
-                .map(warehouseReceiptDetailMapper::toGoodReceiptDetail)
+                .map(warehouseReceiptDetailMapper::toWarehouseReceiptDetail)
                 .peek(warehouseReceiptDetail -> warehouseReceiptDetail.setWarehouseReceipt(savedWarehouseReceipt))
                 .collect(Collectors.toSet());
-        List<WarehouseReceiptDetail> savedWarehouseReceiptDetails = goodReceiptDetailRepository.saveAll(warehouseReceiptDetails);
+        List<WarehouseReceiptDetail> savedWarehouseReceiptDetails = warehouseReceiptDetailRepository.saveAll(warehouseReceiptDetails);
         savedWarehouseReceipt.setWarehouseReceiptDetails(new HashSet<>(savedWarehouseReceiptDetails));
         return warehouseReceiptMapper.toDTO(savedWarehouseReceipt);
     }

@@ -30,7 +30,7 @@ public class WarehouseReceiptMapper {
         return warehouseReceiptDTO;
     }
 
-    public WarehouseReceipt toGoodReceipt(WarehouseReceiptDTO warehouseReceiptDTO) {
+    public WarehouseReceipt toWarehouseReceipt(WarehouseReceiptDTO warehouseReceiptDTO) {
         WarehouseReceipt warehouseReceipt = new WarehouseReceipt();
         warehouseReceipt.setWarehouseReceiptId(warehouseReceiptDTO.getWarehouseReceiptId());
         warehouseReceipt.setTotalValue(warehouseReceiptDTO.getTotalValue());
@@ -38,7 +38,7 @@ public class WarehouseReceiptMapper {
         warehouseReceipt.setSupplierNextDebt(warehouseReceiptDTO.getSupplierNextDebt());
         warehouseReceipt.setSupplier(supplierMapper.toSupplier(warehouseReceiptDTO.getSupplier()));
         warehouseReceipt.setWarehouseReceiptDetails(warehouseReceiptDTO.getWarehouseReceiptDetails().stream()
-                .map(warehouseReceiptDetailMapper::toGoodReceiptDetail)
+                .map(warehouseReceiptDetailMapper::toWarehouseReceiptDetail)
                 .collect(Collectors.toSet()));
         return warehouseReceipt;
     }
