@@ -12,6 +12,7 @@ public class SupplierMapper {
         supplierDTO.setSupplierName(supplier.getSupplierName());
         supplierDTO.setPhoneNumber(supplier.getPhoneNumber());
         supplierDTO.setAddress(supplier.getAddress());
+        supplierDTO.setTaxCode(supplier.getTaxCode());
         supplierDTO.setPayable(supplier.getPayable());
         return supplierDTO;
     }
@@ -21,6 +22,7 @@ public class SupplierMapper {
         supplier.setSupplierId(supplierDTO.getSupplierId());
         supplier.setSupplierName(supplierDTO.getSupplierName());
         supplier.setPhoneNumber(supplierDTO.getPhoneNumber());
+        supplier.setTaxCode(supplierDTO.getTaxCode());
         supplier.setAddress(supplierDTO.getAddress());
         supplier.setPayable(supplierDTO.getPayable());
         return supplier;

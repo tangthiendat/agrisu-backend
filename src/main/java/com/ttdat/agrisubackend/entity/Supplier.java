@@ -28,16 +28,14 @@ public class Supplier extends BaseEntity {
 
     private String supplierName;
 
-
     private String address;
-
 
     private String phoneNumber;
 
+    private String taxCode;
 
     private BigDecimal payable;
 
     private boolean isDeleted;
-
 
 }
