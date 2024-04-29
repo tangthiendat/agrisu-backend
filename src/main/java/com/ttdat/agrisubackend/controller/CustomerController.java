@@ -53,11 +53,6 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.searchCustomers(query));
     }
 
-    @GetMapping("/summary")
-    public ResponseEntity<CustomersSummary> getCustomersSummary() {
-        return ResponseEntity.ok(customerService.getCustomersSummary());
-    }
-
     @GetMapping("/{id}/history")
     public ResponseEntity<List<CustomerHistory>> getCustomerHistory(@PathVariable String id) {
         return ResponseEntity.ok(customerService.getCustomerHistory(id));

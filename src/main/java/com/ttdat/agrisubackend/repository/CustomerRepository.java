@@ -17,9 +17,6 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             "OR c.phoneNumber LIKE concat(:query, '%')")
     List<Customer> searchByNameOrPhone(@Param("query") String query);
 
-    @Query("SELECT new com.ttdat.agrisubackend.dto.CustomersSummary(SUM(c.receivable), SUM(o.totalValue)) " +
-            "FROM Customer c JOIN c.orders o")
-    CustomersSummary getCustomersSummary();
 
 
 }

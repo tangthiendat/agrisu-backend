@@ -74,10 +74,6 @@ public class CustomerService {
         return customers.stream().map(customerMapper::toDTO).toList();
     }
 
-    public CustomersSummary getCustomersSummary() {
-        return customerRepository.getCustomersSummary();
-    }
-
     public List<CustomerHistory> getCustomerHistory(String customerId) {
         return customerDbMapper.getCustomerHistory(customerId);
     }
