@@ -2,7 +2,6 @@ package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
-import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
 import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;

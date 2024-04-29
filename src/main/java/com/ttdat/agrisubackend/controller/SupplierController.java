@@ -16,9 +16,25 @@ public class SupplierController {
         this.supplierService = supplierService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<SupplierDTO>> getSuppliers(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(supplierService.getPaginatedSuppliers(page, pageSize));
+    }
+
     @PostMapping
     public ResponseEntity<SupplierDTO> addSupplier(@RequestBody SupplierDTO supplierDTO) {
         return ResponseEntity.ok(supplierService.add(supplierDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SupplierDTO> updateSupplier(@RequestBody SupplierDTO supplier, @PathVariable String id) {
+        return ResponseEntity.ok(supplierService.update(id, supplier));
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countSuppliers() {
+        return ResponseEntity.ok(supplierService.countSuppliers());
     }
 
     @GetMapping("/search")

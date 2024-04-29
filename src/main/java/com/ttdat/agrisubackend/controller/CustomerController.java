@@ -2,7 +2,6 @@ package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
-import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
