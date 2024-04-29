@@ -1,13 +1,13 @@
 package com.ttdat.agrisubackend.repository;
 
-import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.entity.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -17,6 +17,10 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             "OR c.phoneNumber LIKE concat(:query, '%')")
     List<Customer> searchByNameOrPhone(@Param("query") String query);
 
+    @Query("SELECT COUNT(*) FROM Customer c WHERE c.isDeleted = false")
+    long count();
 
+    @Query("SELECT c FROM Customer c WHERE c.isDeleted = :deleted")
+    Page<Customer> findAllByDeleted(boolean deleted, Pageable pageable);
 
 }

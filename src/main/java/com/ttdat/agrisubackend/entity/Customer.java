@@ -27,12 +27,21 @@ public class Customer extends BaseEntity {
             }
     )
     private String customerId;
+
     private String customerName;
+
     private String phoneNumber;
+
     private String address;
+
     private BigDecimal receivable;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
+    @OneToMany(mappedBy = "customer")
     private Set<Order> orders;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+
+    @OneToMany(mappedBy = "customer")
     private Set<Receipt> receipts;
 }

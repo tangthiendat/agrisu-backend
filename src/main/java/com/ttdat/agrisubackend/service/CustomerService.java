@@ -35,7 +35,7 @@ public class CustomerService {
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<Customer> customers = customerRepository.findAll(pageable).getContent();
+        List<Customer> customers = customerRepository.findAllByDeleted(false, pageable).getContent();
         return customers.stream().map(customerMapper::toDTO).toList();
     }
 
@@ -61,8 +61,8 @@ public class CustomerService {
     public void delete(String id) {
         Customer customerToDelete = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
-       customerRepository.delete(customerToDelete);
-
+        customerToDelete.setDeleted(true);
+        customerRepository.save(customerToDelete);
     }
 
     public Long countCustomers() {
