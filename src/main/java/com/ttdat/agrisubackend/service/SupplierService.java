@@ -49,6 +49,14 @@ public class SupplierService {
         return supplierMapper.toDTO(savedSupplier);
     }
 
+    @Transactional
+    public void delete(String id) {
+        Supplier supplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id: " + id));
+        supplier.setDeleted(true);
+        supplierRepository.save(supplier);
+    }
+
     public List<SupplierDTO> searchSuppliers(String query){
         List<Supplier> suppliers = supplierRepository.searchByNameOrPhone(query);
         return suppliers.stream().map(supplierMapper::toDTO).toList();

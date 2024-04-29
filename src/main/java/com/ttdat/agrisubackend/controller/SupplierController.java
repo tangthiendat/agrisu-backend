@@ -32,6 +32,12 @@ public class SupplierController {
         return ResponseEntity.ok(supplierService.update(id, supplier));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSupplier(@PathVariable String id) {
+        supplierService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long> countSuppliers() {
         return ResponseEntity.ok(supplierService.countSuppliers());
