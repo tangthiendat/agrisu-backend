@@ -11,4 +11,5 @@ public class CustomerDTO {
     private String phoneNumber;
     private String address;
     private BigDecimal receivable;
+    private String taxCode;
 }

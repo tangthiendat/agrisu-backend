@@ -2,7 +2,6 @@ package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
-import com.ttdat.agrisubackend.dto.CustomersSummary;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
 import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
@@ -35,7 +34,7 @@ public class CustomerService {
 
     public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<Customer> customers = customerRepository.findAll(pageable).getContent();
+        List<Customer> customers = customerRepository.findAllByDeleted(false, pageable).getContent();
         return customers.stream().map(customerMapper::toDTO).toList();
     }
 
@@ -54,6 +53,7 @@ public class CustomerService {
         customerToUpdate.setPhoneNumber(convertedCustomer.getPhoneNumber());
         customerToUpdate.setAddress(convertedCustomer.getAddress());
         customerToUpdate.setReceivable(convertedCustomer.getReceivable());
+        customerToUpdate.setTaxCode(convertedCustomer.getTaxCode());
         return customerMapper.toDTO(customerRepository.save(customerToUpdate));
     }
 
@@ -61,8 +61,8 @@ public class CustomerService {
     public void delete(String id) {
         Customer customerToDelete = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
-       customerRepository.delete(customerToDelete);
-
+        customerToDelete.setDeleted(true);
+        customerRepository.save(customerToDelete);
     }
 
     public Long countCustomers() {
@@ -72,10 +72,6 @@ public class CustomerService {
     public List<CustomerDTO> searchCustomers(String query) {
         List<Customer> customers = customerRepository.searchByNameOrPhone(query);
         return customers.stream().map(customerMapper::toDTO).toList();
-    }
-
-    public CustomersSummary getCustomersSummary() {
-        return customerRepository.getCustomersSummary();
     }
 
     public List<CustomerHistory> getCustomerHistory(String customerId) {
