@@ -1,6 +1,8 @@
 package com.ttdat.agrisubackend.service;
 
+import com.ttdat.agrisubackend.dbmapper.SupplierDbMapper;
 import com.ttdat.agrisubackend.dto.SupplierDTO;
+import com.ttdat.agrisubackend.dto.SupplierHistory;
 import com.ttdat.agrisubackend.entity.Supplier;
 import com.ttdat.agrisubackend.mapper.SupplierMapper;
 import com.ttdat.agrisubackend.repository.SupplierRepository;
@@ -17,10 +19,13 @@ public class SupplierService {
 
     private final SupplierRepository supplierRepository;
     private final SupplierMapper supplierMapper;
+    private final SupplierDbMapper supplierDbMapper;
 
-    public SupplierService(SupplierRepository supplierRepository, SupplierMapper supplierMapper) {
+    public SupplierService(SupplierRepository supplierRepository, SupplierMapper supplierMapper,
+                           SupplierDbMapper supplierDbMapper) {
         this.supplierRepository = supplierRepository;
         this.supplierMapper = supplierMapper;
+        this.supplierDbMapper = supplierDbMapper;
     }
 
     public List<SupplierDTO> getPaginatedSuppliers(int page, int pageSize) {
@@ -64,5 +69,9 @@ public class SupplierService {
 
     public Long countSuppliers(){
         return supplierRepository.count();
+    }
+
+    public List<SupplierHistory> getSupplierHistory(String supplierId){
+        return supplierDbMapper.getSupplierHistory(supplierId);
     }
 }

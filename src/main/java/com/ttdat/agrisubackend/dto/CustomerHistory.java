@@ -1,18 +1,13 @@
 package com.ttdat.agrisubackend.dto;
 
 import jakarta.persistence.SqlResultSetMapping;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Data
 public class CustomerHistory {
     private String id;
     private LocalDateTime createdAt;

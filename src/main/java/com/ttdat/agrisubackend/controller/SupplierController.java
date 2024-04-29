@@ -1,6 +1,7 @@
 package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.SupplierDTO;
+import com.ttdat.agrisubackend.dto.SupplierHistory;
 import com.ttdat.agrisubackend.service.SupplierService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,5 +47,10 @@ public class SupplierController {
     @GetMapping("/search")
     public ResponseEntity<List<SupplierDTO>> searchSuppliers(@RequestParam String query) {
         return ResponseEntity.ok(supplierService.searchSuppliers(query));
+    }
+
+    @GetMapping("/{id}/history")
+    public ResponseEntity<List<SupplierHistory>> getSupplierHistory(@PathVariable String id) {
+        return ResponseEntity.ok(supplierService.getSupplierHistory(id));
     }
 }
