@@ -53,6 +53,7 @@ public class CustomerService {
         customerToUpdate.setPhoneNumber(convertedCustomer.getPhoneNumber());
         customerToUpdate.setAddress(convertedCustomer.getAddress());
         customerToUpdate.setReceivable(convertedCustomer.getReceivable());
+        customerToUpdate.setTaxCode(convertedCustomer.getTaxCode());
         return customerMapper.toDTO(customerRepository.save(customerToUpdate));
     }
 

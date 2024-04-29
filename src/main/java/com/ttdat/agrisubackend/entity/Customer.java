@@ -36,6 +36,8 @@ public class Customer extends BaseEntity {
 
     private BigDecimal receivable;
 
+    private String taxCode;
+
     @Column(name = "is_deleted")
     private boolean isDeleted;
 

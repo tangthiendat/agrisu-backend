@@ -14,6 +14,7 @@ public class CustomerMapper {
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
         customerDTO.setAddress(customer.getAddress());
         customerDTO.setReceivable(customer.getReceivable());
+        customerDTO.setTaxCode(customer.getTaxCode());
         return customerDTO;
     }
 
@@ -24,6 +25,7 @@ public class CustomerMapper {
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setAddress(customerDTO.getAddress());
         customer.setReceivable(customerDTO.getReceivable());
+        customer.setTaxCode(customerDTO.getTaxCode());
         return customer;
     }
 }
