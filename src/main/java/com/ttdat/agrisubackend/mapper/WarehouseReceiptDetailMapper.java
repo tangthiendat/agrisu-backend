@@ -2,17 +2,15 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.WarehouseReceiptDetailDTO;
 import com.ttdat.agrisubackend.entity.WarehouseReceiptDetail;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class WarehouseReceiptDetailMapper {
+
     private final ProductMapper productMapper;
     private final UnitMapper unitMapper;
-
-    public WarehouseReceiptDetailMapper(ProductMapper productMapper, UnitMapper unitMapper) {
-        this.productMapper = productMapper;
-        this.unitMapper = unitMapper;
-    }
 
     public WarehouseReceiptDetailDTO toDTO(WarehouseReceiptDetail warehouseReceiptDetail) {
         WarehouseReceiptDetailDTO warehouseReceiptDetailDTO = new WarehouseReceiptDetailDTO();

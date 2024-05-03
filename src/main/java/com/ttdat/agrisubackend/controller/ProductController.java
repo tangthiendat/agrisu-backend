@@ -2,6 +2,7 @@ package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
 public class ProductController {
-    private final ProductService productService;
 
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    private final ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(defaultValue = "0") int page,

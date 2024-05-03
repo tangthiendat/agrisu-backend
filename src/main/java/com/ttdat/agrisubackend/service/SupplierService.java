@@ -6,6 +6,7 @@ import com.ttdat.agrisubackend.dto.SupplierHistory;
 import com.ttdat.agrisubackend.entity.Supplier;
 import com.ttdat.agrisubackend.mapper.SupplierMapper;
 import com.ttdat.agrisubackend.repository.SupplierRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -15,18 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SupplierService {
 
     private final SupplierRepository supplierRepository;
     private final SupplierMapper supplierMapper;
     private final SupplierDbMapper supplierDbMapper;
-
-    public SupplierService(SupplierRepository supplierRepository, SupplierMapper supplierMapper,
-                           SupplierDbMapper supplierDbMapper) {
-        this.supplierRepository = supplierRepository;
-        this.supplierMapper = supplierMapper;
-        this.supplierDbMapper = supplierDbMapper;
-    }
 
     public List<SupplierDTO> getPaginatedSuppliers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);

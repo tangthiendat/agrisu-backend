@@ -7,8 +7,9 @@ import com.ttdat.agrisubackend.mapper.OrderDetailMapper;
 import com.ttdat.agrisubackend.mapper.OrderMapper;
 import com.ttdat.agrisubackend.repository.OrderDetailRepository;
 import com.ttdat.agrisubackend.repository.OrderRepository;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,19 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
+
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final OrderDetailRepository orderDetailsRepository;
     private final OrderDetailMapper orderDetailMapper;
-
-    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper,
-                        OrderDetailRepository orderDetailsRepository, OrderDetailMapper orderDetailMapper) {
-        this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
-        this.orderDetailsRepository = orderDetailsRepository;
-        this.orderDetailMapper = orderDetailMapper;
-    }
 
     @Transactional
     public OrderDTO add(OrderDTO orderDTO) {

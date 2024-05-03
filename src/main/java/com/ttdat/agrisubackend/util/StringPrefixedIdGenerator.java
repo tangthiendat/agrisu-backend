@@ -1,7 +1,5 @@
 package com.ttdat.agrisubackend.util;
 
-
-
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -11,10 +9,8 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.Properties;
-
 
 public class StringPrefixedIdGenerator implements IdentifierGenerator {
     private String prefixValue;

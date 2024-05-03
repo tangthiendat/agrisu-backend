@@ -1,24 +1,20 @@
 package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.UnitDTO;
-import com.ttdat.agrisubackend.mapper.UnitMapper;
 import com.ttdat.agrisubackend.entity.Unit;
+import com.ttdat.agrisubackend.mapper.UnitMapper;
 import com.ttdat.agrisubackend.repository.UnitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UnitService {
+
     private final UnitRepository unitRepository;
     private final UnitMapper unitMapper;
-
-    @Autowired
-    public UnitService(UnitRepository unitRepository, UnitMapper unitMapper) {
-        this.unitRepository = unitRepository;
-        this.unitMapper = unitMapper;
-    }
 
     public List<UnitDTO> getAll(){
         List<Unit> units = unitRepository.findAll();

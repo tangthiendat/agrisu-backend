@@ -2,17 +2,15 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.WarehouseExportDetailDTO;
 import com.ttdat.agrisubackend.entity.WarehouseExportDetail;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class WarehouseExportDetailMapper {
+
     private final ProductMapper productMapper;
     private final UnitMapper unitMapper;
-
-    public WarehouseExportDetailMapper(ProductMapper productMapper, UnitMapper unitMapper) {
-        this.productMapper = productMapper;
-        this.unitMapper = unitMapper;
-    }
 
     public WarehouseExportDetailDTO toDTO(WarehouseExportDetail warehouseExportDetail) {
         WarehouseExportDetailDTO warehouseExportDetailDTO = new WarehouseExportDetailDTO();
