@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.SupplierDTO;
 import com.ttdat.agrisubackend.dto.SupplierHistory;
 import com.ttdat.agrisubackend.service.SupplierService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class SupplierController {
 
     @PostMapping
     public ResponseEntity<SupplierDTO> addSupplier(@RequestBody SupplierDTO supplierDTO) {
-        return ResponseEntity.ok(supplierService.add(supplierDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(supplierService.add(supplierDTO));
     }
 
     @PutMapping("/{id}")

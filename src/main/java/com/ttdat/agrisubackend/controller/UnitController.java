@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.UnitDTO;
 import com.ttdat.agrisubackend.service.UnitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class UnitController {
 
     @PostMapping
     public ResponseEntity<UnitDTO> create(@RequestBody UnitDTO unitDTO) {
-        return ResponseEntity.ok(unitService.create(unitDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(unitService.create(unitDTO));
     }
 
 }

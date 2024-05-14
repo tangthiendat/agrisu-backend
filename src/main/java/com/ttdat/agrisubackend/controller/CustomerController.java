@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerDTO customerDTO) {
-        return ResponseEntity.ok(customerService.add(customerDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.add(customerDTO));
     }
 
     @PutMapping("/{id}")

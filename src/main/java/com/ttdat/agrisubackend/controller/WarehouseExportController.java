@@ -3,6 +3,7 @@ package com.ttdat.agrisubackend.controller;
 import com.ttdat.agrisubackend.dto.WarehouseExportDTO;
 import com.ttdat.agrisubackend.service.WarehouseExportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,6 @@ public class WarehouseExportController {
 
     @PostMapping
     public ResponseEntity<WarehouseExportDTO> addWarehouseExport(@RequestBody WarehouseExportDTO warehouseExportDTO) {
-        return ResponseEntity.ok(warehouseExportService.add(warehouseExportDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(warehouseExportService.add(warehouseExportDTO));
     }
 }

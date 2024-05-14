@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO newProduct) {
-        return ResponseEntity.ok(productService.add(newProduct));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.add(newProduct));
     }
 
     @PutMapping("/{id}")
