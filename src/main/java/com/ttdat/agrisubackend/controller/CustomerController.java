@@ -3,32 +3,30 @@ package com.ttdat.agrisubackend.controller;
 import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     @GetMapping
-    public ResponseEntity<List<CustomerDTO>> getCustomers(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<CustomerDTO>> getCustomers(@RequestParam(defaultValue = "0") int page,
                                                           @RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(customerService.getPaginatedCustomers(page, pageSize));
     }
 
     @PostMapping
     public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerDTO customerDTO) {
-        return ResponseEntity.ok(customerService.add(customerDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.add(customerDTO));
     }
 
     @PutMapping("/{id}")

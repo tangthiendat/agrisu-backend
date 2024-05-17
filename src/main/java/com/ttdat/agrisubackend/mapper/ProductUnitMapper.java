@@ -2,18 +2,15 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.ProductUnitDTO;
 import com.ttdat.agrisubackend.entity.ProductUnit;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ProductUnitMapper {
 
     private final UnitMapper unitMapper;
-
-    @Autowired
-    public ProductUnitMapper(UnitMapper unitMapper) {
-        this.unitMapper = unitMapper;
-    }
 
     public ProductUnitDTO toDTO(ProductUnit productUnit) {
         ProductUnitDTO productUnitDTO = new ProductUnitDTO();

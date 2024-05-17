@@ -7,6 +7,3 @@ spring:
     password: AVNS_xqL5xn9jhkdGjWKs9Un
   jpa:
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true

@@ -7,6 +7,7 @@ import com.ttdat.agrisubackend.mapper.WarehouseReceiptDetailMapper;
 import com.ttdat.agrisubackend.mapper.WarehouseReceiptMapper;
 import com.ttdat.agrisubackend.repository.WarehouseReceiptDetailRepository;
 import com.ttdat.agrisubackend.repository.WarehouseReceiptRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,19 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class WarehouseReceiptService {
+
     private final WarehouseReceiptRepository warehouseReceiptRepository;
     private final WarehouseReceiptMapper warehouseReceiptMapper;
     private final WarehouseReceiptDetailRepository warehouseReceiptDetailRepository;
     private final WarehouseReceiptDetailMapper warehouseReceiptDetailMapper;
-
-    public WarehouseReceiptService(WarehouseReceiptRepository warehouseReceiptRepository, WarehouseReceiptMapper warehouseReceiptMapper,
-                                   WarehouseReceiptDetailRepository warehouseReceiptDetailRepository, WarehouseReceiptDetailMapper warehouseReceiptDetailMapper) {
-        this.warehouseReceiptRepository = warehouseReceiptRepository;
-        this.warehouseReceiptMapper = warehouseReceiptMapper;
-        this.warehouseReceiptDetailRepository = warehouseReceiptDetailRepository;
-        this.warehouseReceiptDetailMapper = warehouseReceiptDetailMapper;
-    }
 
     @Transactional
     public WarehouseReceiptDTO add(WarehouseReceiptDTO warehouseReceiptDTO) {

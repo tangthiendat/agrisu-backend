@@ -2,16 +2,14 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.ReceiptDTO;
 import com.ttdat.agrisubackend.entity.Receipt;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ReceiptMapper {
 
     private final CustomerMapper customerMapper;
-
-    public ReceiptMapper(CustomerMapper customerMapper) {
-        this.customerMapper = customerMapper;
-    }
 
     public ReceiptDTO toDTO(Receipt receipt) {
         ReceiptDTO receiptDTO = new ReceiptDTO();

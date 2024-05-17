@@ -2,21 +2,18 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.OrderDTO;
 import com.ttdat.agrisubackend.entity.Order;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class OrderMapper {
 
     private final CustomerMapper customerMapper;
     private final OrderDetailMapper orderDetailMapper;
-
-    public OrderMapper(CustomerMapper customerMapper, OrderDetailMapper orderDetailMapper) {
-        this.customerMapper = customerMapper;
-        this.orderDetailMapper = orderDetailMapper;
-    }
 
     public OrderDTO toDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();

@@ -3,29 +3,29 @@ package com.ttdat.agrisubackend.controller;
 import com.ttdat.agrisubackend.dto.SupplierDTO;
 import com.ttdat.agrisubackend.dto.SupplierHistory;
 import com.ttdat.agrisubackend.service.SupplierService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/suppliers")
 public class SupplierController {
     private final SupplierService supplierService;
 
-    public SupplierController(SupplierService supplierService) {
-        this.supplierService = supplierService;
-    }
-
     @GetMapping
-    public ResponseEntity<List<SupplierDTO>> getSuppliers(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<SupplierDTO>> getSuppliers(@RequestParam(defaultValue = "0") int page,
                                                           @RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(supplierService.getPaginatedSuppliers(page, pageSize));
     }
 
     @PostMapping
     public ResponseEntity<SupplierDTO> addSupplier(@RequestBody SupplierDTO supplierDTO) {
-        return ResponseEntity.ok(supplierService.add(supplierDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(supplierService.add(supplierDTO));
     }
 
     @PutMapping("/{id}")

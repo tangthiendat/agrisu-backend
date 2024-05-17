@@ -1,39 +1,34 @@
 package com.ttdat.agrisubackend.service;
 
 import com.ttdat.agrisubackend.dto.ProductDTO;
-import com.ttdat.agrisubackend.mapper.ProductMapper;
-import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
 import com.ttdat.agrisubackend.entity.Product;
 import com.ttdat.agrisubackend.entity.ProductUnit;
+import com.ttdat.agrisubackend.mapper.ProductMapper;
+import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
 import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductUnitRepository productUnitRepository;
     private final ProductUnitMapper productUnitMapper;
-
-
-    @Autowired
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper,
-                          ProductUnitRepository productUnitRepository, ProductUnitMapper productUnitMapper) {
-        this.productRepository = productRepository;
-        this.productMapper = productMapper;
-        this.productUnitRepository = productUnitRepository;
-        this.productUnitMapper = productUnitMapper;
-    }
 
     @Transactional
     public ProductDTO add(ProductDTO productDTO) {
@@ -99,10 +94,9 @@ public class ProductService {
         productRepository.delete(productToDelete);
     }
 
-    public List<ProductDTO> getPaginatedProducts(int pageNumber, int pageSize) {
+    public Page<ProductDTO> getPaginatedProducts(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<Product> products = productRepository.findAll(pageable).getContent();
-        return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
+        return productRepository.findAll(pageable).map(productMapper::toDTO);
     }
 
     public Long countProducts() {

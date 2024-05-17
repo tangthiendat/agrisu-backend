@@ -7,6 +7,7 @@ import com.ttdat.agrisubackend.mapper.WarehouseExportDetailMapper;
 import com.ttdat.agrisubackend.mapper.WarehouseExportMapper;
 import com.ttdat.agrisubackend.repository.WarehouseExportDetailRepository;
 import com.ttdat.agrisubackend.repository.WarehouseExportRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,19 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class WarehouseExportService {
+
     private final WarehouseExportRepository warehouseExportRepository;
     private final WarehouseExportMapper warehouseExportMapper;
     private final WarehouseExportDetailRepository warehouseExportDetailRepository;
     private final WarehouseExportDetailMapper warehouseExportDetailMapper;
-
-    public WarehouseExportService(WarehouseExportRepository warehouseExportRepository, WarehouseExportMapper warehouseExportMapper,
-                                   WarehouseExportDetailRepository warehouseExportDetailRepository, WarehouseExportDetailMapper warehouseExportDetailMapper) {
-        this.warehouseExportRepository = warehouseExportRepository;
-        this.warehouseExportMapper = warehouseExportMapper;
-        this.warehouseExportDetailRepository = warehouseExportDetailRepository;
-        this.warehouseExportDetailMapper = warehouseExportDetailMapper;
-    }
 
     @Transactional
     public WarehouseExportDTO add(WarehouseExportDTO warehouseExportDTO) {

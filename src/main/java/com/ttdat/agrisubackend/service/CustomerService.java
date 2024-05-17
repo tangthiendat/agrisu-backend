@@ -1,41 +1,32 @@
 package com.ttdat.agrisubackend.service;
 
+import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
-import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.entity.Customer;
-import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
+import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final CustomerDbMapper customerDbMapper;
 
-    @Autowired
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper,
-                            CustomerDbMapper customerDbMapper) {
-        this.customerRepository = customerRepository;
-        this.customerMapper = customerMapper;
-        this.customerDbMapper = customerDbMapper;
-    }
-
-    public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
+    public Page<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<Customer> customers = customerRepository.findAllByDeleted(false, pageable).getContent();
-        return customers.stream().map(customerMapper::toDTO).toList();
+        return customerRepository.findAll(pageable).map(customerMapper::toDTO);
     }
 
     @Transactional

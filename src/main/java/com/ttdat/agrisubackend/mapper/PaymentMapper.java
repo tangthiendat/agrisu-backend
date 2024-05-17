@@ -2,16 +2,14 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.PaymentDTO;
 import com.ttdat.agrisubackend.entity.Payment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class PaymentMapper {
 
     private final SupplierMapper supplierMapper;
-
-    public PaymentMapper(SupplierMapper supplierMapper) {
-        this.supplierMapper = supplierMapper;
-    }
 
     public PaymentDTO toDTO(Payment payment) {
         PaymentDTO paymentDTO = new PaymentDTO();

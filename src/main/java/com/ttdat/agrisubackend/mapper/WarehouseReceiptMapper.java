@@ -2,19 +2,17 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.WarehouseReceiptDTO;
 import com.ttdat.agrisubackend.entity.WarehouseReceipt;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class WarehouseReceiptMapper {
+
     private final SupplierMapper supplierMapper;
     private final WarehouseReceiptDetailMapper warehouseReceiptDetailMapper;
-
-    public WarehouseReceiptMapper(SupplierMapper supplierMapper, WarehouseReceiptDetailMapper warehouseReceiptDetailMapper) {
-        this.supplierMapper = supplierMapper;
-        this.warehouseReceiptDetailMapper = warehouseReceiptDetailMapper;
-    }
 
     public WarehouseReceiptDTO toDTO(WarehouseReceipt warehouseReceipt) {
         WarehouseReceiptDTO warehouseReceiptDTO = new WarehouseReceiptDTO();
