@@ -8,6 +8,7 @@ import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
 import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -93,10 +94,9 @@ public class ProductService {
         productRepository.delete(productToDelete);
     }
 
-    public List<ProductDTO> getPaginatedProducts(int pageNumber, int pageSize) {
+    public Page<ProductDTO> getPaginatedProducts(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<Product> products = productRepository.findAll(pageable).getContent();
-        return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
+        return productRepository.findAll(pageable).map(productMapper::toDTO);
     }
 
     public Long countProducts() {

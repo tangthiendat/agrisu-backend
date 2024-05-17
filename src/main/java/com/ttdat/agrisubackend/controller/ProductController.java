@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "10") int pageSize) {
+    public ResponseEntity<Page<ProductDTO>> getProducts(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(productService.getPaginatedProducts(page, pageSize));
     }
 
