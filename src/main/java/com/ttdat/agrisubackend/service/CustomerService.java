@@ -8,6 +8,7 @@ import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -23,10 +24,9 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
     private final CustomerDbMapper customerDbMapper;
 
-    public List<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
+    public Page<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<Customer> customers = customerRepository.findAllByDeleted(false, pageable).getContent();
-        return customers.stream().map(customerMapper::toDTO).toList();
+        return customerRepository.findAll(pageable).map(customerMapper::toDTO);
     }
 
     @Transactional

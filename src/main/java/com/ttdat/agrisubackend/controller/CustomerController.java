@@ -4,6 +4,7 @@ import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<List<CustomerDTO>> getCustomers(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<CustomerDTO>> getCustomers(@RequestParam(defaultValue = "0") int page,
                                                           @RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(customerService.getPaginatedCustomers(page, pageSize));
     }
