@@ -7,6 +7,7 @@ import com.ttdat.agrisubackend.entity.Supplier;
 import com.ttdat.agrisubackend.mapper.SupplierMapper;
 import com.ttdat.agrisubackend.repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -23,10 +24,9 @@ public class SupplierService {
     private final SupplierMapper supplierMapper;
     private final SupplierDbMapper supplierDbMapper;
 
-    public List<SupplierDTO> getPaginatedSuppliers(int page, int pageSize) {
+    public Page<SupplierDTO> getPaginatedSuppliers(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<Supplier> suppliers = supplierRepository.findAllByDeleted(false, pageable).getContent();
-        return suppliers.stream().map(supplierMapper::toDTO).toList();
+        return supplierRepository.findAll(pageable).map(supplierMapper::toDTO);
     }
 
     @Transactional
