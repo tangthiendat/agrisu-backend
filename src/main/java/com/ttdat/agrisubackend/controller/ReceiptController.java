@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/receipts")
+@RequestMapping("/v1/receipts")
 public class ReceiptController {
 
     private final ReceiptService receiptService;

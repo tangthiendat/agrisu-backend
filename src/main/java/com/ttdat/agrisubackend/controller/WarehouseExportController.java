@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/warehouse-exports")
+@RequestMapping("/v1/warehouse-exports")
 public class WarehouseExportController {
 
     private final WarehouseExportService warehouseExportService;
