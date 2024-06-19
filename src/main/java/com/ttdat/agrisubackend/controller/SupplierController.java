@@ -2,7 +2,7 @@ package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.SupplierDTO;
 import com.ttdat.agrisubackend.dto.SupplierHistory;
-import com.ttdat.agrisubackend.service.SupplierService;
+import com.ttdat.agrisubackend.service.SupplierServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,42 +15,37 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/v1/suppliers")
 public class SupplierController {
-    private final SupplierService supplierService;
+    private final SupplierServiceImpl supplierServiceImpl;
 
     @GetMapping
     public ResponseEntity<Page<SupplierDTO>> getSuppliers(@RequestParam(defaultValue = "0") int page,
                                                           @RequestParam(defaultValue = "10") int pageSize) {
-        return ResponseEntity.ok(supplierService.getPaginatedSuppliers(page, pageSize));
+        return ResponseEntity.ok(supplierServiceImpl.getSuppliers(page, pageSize));
     }
 
     @PostMapping
     public ResponseEntity<SupplierDTO> addSupplier(@RequestBody SupplierDTO supplierDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(supplierService.add(supplierDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(supplierServiceImpl.add(supplierDTO));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SupplierDTO> updateSupplier(@RequestBody SupplierDTO supplier, @PathVariable String id) {
-        return ResponseEntity.ok(supplierService.update(id, supplier));
+        return ResponseEntity.ok(supplierServiceImpl.update(id, supplier));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSupplier(@PathVariable String id) {
-        supplierService.delete(id);
+        supplierServiceImpl.delete(id);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Long> countSuppliers() {
-        return ResponseEntity.ok(supplierService.countSuppliers());
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<SupplierDTO>> searchSuppliers(@RequestParam String query) {
-        return ResponseEntity.ok(supplierService.searchSuppliers(query));
+        return ResponseEntity.ok(supplierServiceImpl.searchSuppliers(query));
     }
 
     @GetMapping("/{id}/history")
     public ResponseEntity<List<SupplierHistory>> getSupplierHistory(@PathVariable String id) {
-        return ResponseEntity.ok(supplierService.getSupplierHistory(id));
+        return ResponseEntity.ok(supplierServiceImpl.getSupplierHistory(id));
     }
 }

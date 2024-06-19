@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.PaymentDTO;
-import com.ttdat.agrisubackend.service.PaymentService;
+import com.ttdat.agrisubackend.service.PaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/payments")
 public class PaymentController {
 
-    private final PaymentService paymentService;
+    private final PaymentServiceImpl paymentServiceImpl;
 
     @PostMapping
     public ResponseEntity<PaymentDTO> addPayment(@RequestBody PaymentDTO paymentDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.add(paymentDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(paymentServiceImpl.add(paymentDTO));
     }
 
 }

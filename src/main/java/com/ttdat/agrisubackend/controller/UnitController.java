@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.UnitDTO;
-import com.ttdat.agrisubackend.service.UnitService;
+import com.ttdat.agrisubackend.service.UnitServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +14,16 @@ import java.util.List;
 @RequestMapping("/v1/units")
 public class UnitController {
 
-    private final UnitService unitService;
+    private final UnitServiceImpl unitServiceImpl;
 
     @GetMapping
-    public ResponseEntity<List<UnitDTO>> getAll(){
-        return ResponseEntity.ok(unitService.getAll());
+    public ResponseEntity<List<UnitDTO>> getUnits(){
+        return ResponseEntity.ok(unitServiceImpl.getUnits());
     }
 
     @PostMapping
     public ResponseEntity<UnitDTO> create(@RequestBody UnitDTO unitDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(unitService.create(unitDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(unitServiceImpl.add(unitDTO));
     }
 
 }

@@ -1,72 +1,17 @@
 package com.ttdat.agrisubackend.service;
 
-import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.dto.CustomerDTO;
 import com.ttdat.agrisubackend.dto.CustomerHistory;
-import com.ttdat.agrisubackend.entity.Customer;
-import com.ttdat.agrisubackend.mapper.CustomerMapper;
-import com.ttdat.agrisubackend.repository.CustomerRepository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class CustomerService {
-
-    private final CustomerRepository customerRepository;
-    private final CustomerMapper customerMapper;
-    private final CustomerDbMapper customerDbMapper;
-
-    public Page<CustomerDTO> getPaginatedCustomers(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        return customerRepository.findAll(pageable).map(customerMapper::toDTO);
-    }
-
-    @Transactional
-    public CustomerDTO add(CustomerDTO customerDTO) {
-        Customer savedCustomer = customerRepository.save(customerMapper.toCustomer(customerDTO));
-        return customerMapper.toDTO(savedCustomer);
-    }
-
-    @Transactional
-    public CustomerDTO update(String id, CustomerDTO customerDTO) {
-        Customer customerToUpdate = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
-        Customer convertedCustomer = customerMapper.toCustomer(customerDTO);
-        customerToUpdate.setCustomerName(convertedCustomer.getCustomerName());
-        customerToUpdate.setPhoneNumber(convertedCustomer.getPhoneNumber());
-        customerToUpdate.setAddress(convertedCustomer.getAddress());
-        customerToUpdate.setReceivable(convertedCustomer.getReceivable());
-        customerToUpdate.setTaxCode(convertedCustomer.getTaxCode());
-        return customerMapper.toDTO(customerRepository.save(customerToUpdate));
-    }
-
-    @Transactional
-    public void delete(String id) {
-        Customer customerToDelete = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
-        customerToDelete.setDeleted(true);
-        customerRepository.save(customerToDelete);
-    }
-
-    public Long countCustomers() {
-        return customerRepository.count();
-    }
-
-    public List<CustomerDTO> searchCustomers(String query) {
-        List<Customer> customers = customerRepository.searchByNameOrPhone(query);
-        return customers.stream().map(customerMapper::toDTO).toList();
-    }
-
-    public List<CustomerHistory> getCustomerHistory(String customerId) {
-        return customerDbMapper.getCustomerHistory(customerId);
-    }
-
+public interface CustomerService {
+    Page<CustomerDTO> getCustomers(int page, int pageSize);
+    CustomerDTO add(CustomerDTO customerDTO);
+    CustomerDTO update(String id, CustomerDTO customerDTO);
+    void delete(String id);
+    List<CustomerDTO> searchCustomers(String query);
+    List<CustomerHistory> getCustomerHistory(String customerId);
 }

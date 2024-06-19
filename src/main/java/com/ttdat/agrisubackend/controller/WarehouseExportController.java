@@ -1,7 +1,7 @@
 package com.ttdat.agrisubackend.controller;
 
 import com.ttdat.agrisubackend.dto.WarehouseExportDTO;
-import com.ttdat.agrisubackend.service.WarehouseExportService;
+import com.ttdat.agrisubackend.service.WarehouseExportServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/warehouse-exports")
 public class WarehouseExportController {
 
-    private final WarehouseExportService warehouseExportService;
+    private final WarehouseExportServiceImpl warehouseExportServiceImpl;
 
     @PostMapping
     public ResponseEntity<WarehouseExportDTO> addWarehouseExport(@RequestBody WarehouseExportDTO warehouseExportDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(warehouseExportService.add(warehouseExportDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(warehouseExportServiceImpl.add(warehouseExportDTO));
     }
 }
