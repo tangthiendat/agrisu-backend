@@ -3,7 +3,9 @@ package com.ttdat.agrisubackend.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,20 +17,21 @@ import java.time.LocalDateTime;
 @Data
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BaseEntity {
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @CreatedBy
     @Column(updatable = false)
-    private String createdBy;
+    String createdBy;
 
     @LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @LastModifiedBy
     @Column(insertable = false)
-    private String updatedBy;
+    String updatedBy;
 }

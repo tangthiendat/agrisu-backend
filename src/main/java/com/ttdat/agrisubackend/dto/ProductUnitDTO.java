@@ -1,17 +1,22 @@
 package com.ttdat.agrisubackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductUnitDTO {
-    private Integer id;
-    private UnitDTO unit;
-    private Integer baseQuantity;
-    private BigDecimal originalPrice;
-    private BigDecimal sellingPrice;
+    Integer id;
+    UnitDTO unit;
+    Integer baseQuantity;
+    BigDecimal originalPrice;
+    BigDecimal sellingPrice;
     @JsonProperty("isDefault")
-    private boolean isDefault;
+    boolean isDefault;
 }

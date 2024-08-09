@@ -1,18 +1,23 @@
 package com.ttdat.agrisubackend.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class WarehouseExportDTO {
-    private String warehouseExportId;
-    private LocalDateTime createdAt;
-    private CustomerDTO customer;
-    private BigDecimal totalValue;
-    private BigDecimal customerCurrentDebt;
-    private BigDecimal customerNextDebt;
-    private Set<WarehouseExportDetailDTO> warehouseExportDetails;
+    String warehouseExportId;
+    LocalDateTime createdAt;
+    CustomerDTO customer;
+    BigDecimal totalValue;
+    BigDecimal customerCurrentDebt;
+    BigDecimal customerNextDebt;
+    Set<WarehouseExportDetailDTO> warehouseExportDetails;
 }

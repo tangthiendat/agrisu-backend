@@ -1,20 +1,24 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dto.UnitDTO;
 import com.ttdat.agrisubackend.entity.Unit;
 import com.ttdat.agrisubackend.mapper.UnitMapper;
 import com.ttdat.agrisubackend.repository.UnitRepository;
+import com.ttdat.agrisubackend.service.UnitService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UnitServiceImpl implements UnitService{
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class UnitServiceImpl implements UnitService {
 
-    private final UnitRepository unitRepository;
-    private final UnitMapper unitMapper;
+    UnitRepository unitRepository;
+    UnitMapper unitMapper;
 
     @Override
     public List<UnitDTO> getUnits(){

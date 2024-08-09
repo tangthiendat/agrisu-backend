@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dto.ProductDTO;
 import com.ttdat.agrisubackend.entity.Product;
@@ -7,7 +7,10 @@ import com.ttdat.agrisubackend.mapper.ProductMapper;
 import com.ttdat.agrisubackend.mapper.ProductUnitMapper;
 import com.ttdat.agrisubackend.repository.ProductRepository;
 import com.ttdat.agrisubackend.repository.ProductUnitRepository;
+import com.ttdat.agrisubackend.service.ProductService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +26,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImpl implements ProductService{
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
-    private final ProductUnitRepository productUnitRepository;
-    private final ProductUnitMapper productUnitMapper;
+    ProductRepository productRepository;
+    ProductMapper productMapper;
+    ProductUnitRepository productUnitRepository;
+    ProductUnitMapper productUnitMapper;
 
     @Override
     public Page<ProductDTO> getProducts(int pageNumber, int pageSize) {

@@ -1,9 +1,14 @@
 package com.ttdat.agrisubackend.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UnitDTO {
-    private Integer unitId;
-    private String unitName;
+    Integer unitId;
+    String unitName;
 }

@@ -1,14 +1,19 @@
 package com.ttdat.agrisubackend.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderDetailDTO {
-    private Long id;
-    private ProductDTO product;
-    private UnitDTO unit;
-    private BigDecimal unitPrice;
-    private Integer quantity;
+    Long id;
+    ProductDTO product;
+    UnitDTO unit;
+    BigDecimal unitPrice;
+    Integer quantity;
 }

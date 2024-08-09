@@ -3,17 +3,20 @@ package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "products")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product extends BaseEntity {
 
     @Id
@@ -27,13 +30,13 @@ public class Product extends BaseEntity {
                     @Parameter(name = "numberFormat", value = "%05d")
             }
     )
-    private String productId;
+    String productId;
 
-    private String productName;
+    String productName;
 
-    private int stockQuantity;
+    int stockQuantity;
     
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private Set<ProductUnit> productUnits;
+    Set<ProductUnit> productUnits;
 }

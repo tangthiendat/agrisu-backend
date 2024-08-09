@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dto.WarehouseExportDTO;
 import com.ttdat.agrisubackend.entity.WarehouseExport;
@@ -7,7 +7,10 @@ import com.ttdat.agrisubackend.mapper.WarehouseExportDetailMapper;
 import com.ttdat.agrisubackend.mapper.WarehouseExportMapper;
 import com.ttdat.agrisubackend.repository.WarehouseExportDetailRepository;
 import com.ttdat.agrisubackend.repository.WarehouseExportRepository;
+import com.ttdat.agrisubackend.service.WarehouseExportService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +21,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class WarehouseExportServiceImpl implements WarehouseExportService{
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class WarehouseExportServiceImpl implements WarehouseExportService {
 
-    private final WarehouseExportRepository warehouseExportRepository;
-    private final WarehouseExportMapper warehouseExportMapper;
-    private final WarehouseExportDetailRepository warehouseExportDetailRepository;
-    private final WarehouseExportDetailMapper warehouseExportDetailMapper;
+    WarehouseExportRepository warehouseExportRepository;
+    WarehouseExportMapper warehouseExportMapper;
+    WarehouseExportDetailRepository warehouseExportDetailRepository;
+    WarehouseExportDetailMapper warehouseExportDetailMapper;
 
     @Override
     @Transactional

@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dbmapper.CustomerDbMapper;
 import com.ttdat.agrisubackend.dto.CustomerDTO;
@@ -6,8 +6,11 @@ import com.ttdat.agrisubackend.dto.CustomerHistory;
 import com.ttdat.agrisubackend.entity.Customer;
 import com.ttdat.agrisubackend.mapper.CustomerMapper;
 import com.ttdat.agrisubackend.repository.CustomerRepository;
+import com.ttdat.agrisubackend.service.CustomerService;
 import jakarta.transaction.Transactional;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +21,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CustomerServiceImpl implements CustomerService {
 
-    private final CustomerRepository customerRepository;
-    private final CustomerMapper customerMapper;
-    private final CustomerDbMapper customerDbMapper;
+    CustomerRepository customerRepository;
+    CustomerMapper customerMapper;
+    CustomerDbMapper customerDbMapper;
 
     @Override
     public Page<CustomerDTO> getCustomers(int page, int pageSize) {

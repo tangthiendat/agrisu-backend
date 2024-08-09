@@ -1,19 +1,21 @@
 package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "customers")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Customer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_id_generator")
@@ -26,24 +28,24 @@ public class Customer extends BaseEntity {
                     @org.hibernate.annotations.Parameter(name = "numberFormat", value = "%06d")
             }
     )
-    private String customerId;
+    String customerId;
 
-    private String customerName;
+    String customerName;
 
-    private String phoneNumber;
+    String phoneNumber;
 
-    private String address;
+    String address;
 
-    private BigDecimal receivable;
+    BigDecimal receivable;
 
-    private String taxCode;
+    String taxCode;
 
     @Column(name = "is_deleted")
-    private boolean isDeleted;
+    boolean isDeleted;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Order> orders;
+    Set<Order> orders;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Receipt> receipts;
+    Set<Receipt> receipts;
 }

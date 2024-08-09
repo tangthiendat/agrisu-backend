@@ -1,22 +1,27 @@
 package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "units")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Unit extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @GenericGenerator(name = "native")
-    private Integer unitId;
+    Integer unitId;
 
-    private String unitName;
+    String unitName;
 
     @OneToMany(mappedBy = "unit")
-    private Set<ProductUnit> productUnits;
+    Set<ProductUnit> productUnits;
 }

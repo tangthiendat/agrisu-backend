@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dto.OrderDTO;
 import com.ttdat.agrisubackend.entity.Order;
@@ -7,7 +7,10 @@ import com.ttdat.agrisubackend.mapper.OrderDetailMapper;
 import com.ttdat.agrisubackend.mapper.OrderMapper;
 import com.ttdat.agrisubackend.repository.OrderDetailRepository;
 import com.ttdat.agrisubackend.repository.OrderRepository;
+import com.ttdat.agrisubackend.service.OrderService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +21,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService{
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
-    private final OrderDetailRepository orderDetailsRepository;
-    private final OrderDetailMapper orderDetailMapper;
+    OrderRepository orderRepository;
+    OrderMapper orderMapper;
+    OrderDetailRepository orderDetailsRepository;
+    OrderDetailMapper orderDetailMapper;
 
     @Override
     @Transactional

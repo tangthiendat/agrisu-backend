@@ -1,17 +1,21 @@
 package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "payments")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Payment extends BaseEntity{
 
     @Id
@@ -26,15 +30,15 @@ public class Payment extends BaseEntity{
                     @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
-    private String paymentId;
+    String paymentId;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    Supplier supplier;
 
-    private BigDecimal supplierCurrentDebt;
+    BigDecimal supplierCurrentDebt;
 
-    private BigDecimal paidAmount;
+    BigDecimal paidAmount;
 
-    private BigDecimal supplierNextDebt;
+    BigDecimal supplierNextDebt;
 }

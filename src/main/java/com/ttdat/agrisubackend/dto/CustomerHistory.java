@@ -1,19 +1,23 @@
 package com.ttdat.agrisubackend.dto;
 
-import jakarta.persistence.SqlResultSetMapping;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomerHistory {
-    private String id;
-    private LocalDateTime createdAt;
-    private String type;
-    private BigDecimal currentDebt;
-    private BigDecimal value;
-    private BigDecimal payment;
-    private BigDecimal nextDebt;
+    String id;
+    LocalDateTime createdAt;
+    String type;
+    BigDecimal currentDebt;
+    BigDecimal value;
+    BigDecimal payment;
+    BigDecimal nextDebt;
 }

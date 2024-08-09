@@ -1,17 +1,21 @@
 package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "receipts")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Receipt extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "receipt_id_generator")
@@ -25,16 +29,16 @@ public class Receipt extends BaseEntity {
                     @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
-    private String receiptId;
+    String receiptId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    Customer customer;
 
-    private BigDecimal customerCurrentDebt;
+    BigDecimal customerCurrentDebt;
 
-    private BigDecimal paidAmount;
+    BigDecimal paidAmount;
 
-    private BigDecimal customerNextDebt;
+    BigDecimal customerNextDebt;
 
 }

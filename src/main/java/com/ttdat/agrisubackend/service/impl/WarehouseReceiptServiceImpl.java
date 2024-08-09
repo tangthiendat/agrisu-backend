@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dto.WarehouseReceiptDTO;
 import com.ttdat.agrisubackend.entity.WarehouseReceipt;
@@ -7,7 +7,10 @@ import com.ttdat.agrisubackend.mapper.WarehouseReceiptDetailMapper;
 import com.ttdat.agrisubackend.mapper.WarehouseReceiptMapper;
 import com.ttdat.agrisubackend.repository.WarehouseReceiptDetailRepository;
 import com.ttdat.agrisubackend.repository.WarehouseReceiptRepository;
+import com.ttdat.agrisubackend.service.WarehouseReceiptService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +21,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WarehouseReceiptServiceImpl implements WarehouseReceiptService {
 
-    private final WarehouseReceiptRepository warehouseReceiptRepository;
-    private final WarehouseReceiptMapper warehouseReceiptMapper;
-    private final WarehouseReceiptDetailRepository warehouseReceiptDetailRepository;
-    private final WarehouseReceiptDetailMapper warehouseReceiptDetailMapper;
+    WarehouseReceiptRepository warehouseReceiptRepository;
+    WarehouseReceiptMapper warehouseReceiptMapper;
+    WarehouseReceiptDetailRepository warehouseReceiptDetailRepository;
+    WarehouseReceiptDetailMapper warehouseReceiptDetailMapper;
 
     @Transactional
     public WarehouseReceiptDTO add(WarehouseReceiptDTO warehouseReceiptDTO) {

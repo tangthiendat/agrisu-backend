@@ -1,20 +1,22 @@
 package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "orders")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order extends BaseEntity{
 
     @Id
@@ -29,18 +31,18 @@ public class Order extends BaseEntity{
                     @Parameter(name = "hasYearPrefix", value = "true")
             }
     )
-    private String orderId;
+    String orderId;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
-    private Customer customer;
+    Customer customer;
 
-    private BigDecimal totalValue;
+    BigDecimal totalValue;
 
-    private boolean isPaid;
+    boolean isPaid;
 
-    private BigDecimal customerPayment;
+    BigDecimal customerPayment;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrderDetail> orderDetails;
+    Set<OrderDetail> orderDetails;
 }

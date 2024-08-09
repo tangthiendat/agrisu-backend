@@ -1,15 +1,20 @@
 package com.ttdat.agrisubackend.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SupplierDTO {
-    private String supplierId;
-    private String supplierName;
-    private String phoneNumber;
-    private String address;
-    private String taxCode;
-    private BigDecimal payable;
+    String supplierId;
+    String supplierName;
+    String phoneNumber;
+    String address;
+    String taxCode;
+    BigDecimal payable;
 }

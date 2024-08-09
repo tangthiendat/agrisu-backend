@@ -1,16 +1,21 @@
 package com.ttdat.agrisubackend.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentDTO {
-    private String paymentId;
-    private LocalDateTime createdAt;
-    private SupplierDTO supplier;
-    private BigDecimal supplierCurrentDebt;
-    private BigDecimal paidAmount;
-    private BigDecimal supplierNextDebt;
+    String paymentId;
+    LocalDateTime createdAt;
+    SupplierDTO supplier;
+    BigDecimal supplierCurrentDebt;
+    BigDecimal paidAmount;
+    BigDecimal supplierNextDebt;
 }

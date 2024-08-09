@@ -1,40 +1,41 @@
 package com.ttdat.agrisubackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "products_units")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductUnit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "native")
     @GenericGenerator(name = "native")
-    private Integer id;
+    Integer id;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "productId", nullable = false)
-    private Product product;
+    Product product;
 
     @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "unitId", nullable = false)
-    private Unit unit;
+    Unit unit;
 
-    private Integer baseQuantity;
-
-    @Column(precision = 15, scale = 2)
-    private BigDecimal originalPrice;
+    Integer baseQuantity;
 
     @Column(precision = 15, scale = 2)
-    private BigDecimal sellingPrice;
+    BigDecimal originalPrice;
 
-    private boolean isDefault;
+    @Column(precision = 15, scale = 2)
+    BigDecimal sellingPrice;
+
+    boolean isDefault;
 
 }

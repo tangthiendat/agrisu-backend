@@ -1,18 +1,22 @@
 package com.ttdat.agrisubackend.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderDTO {
-    private String orderId;
-    private LocalDateTime createdAt;
-    private CustomerDTO customer;
-    private BigDecimal totalValue;
-    private BigDecimal customerPayment;
-    private Set<OrderDetailDTO> orderDetails;
+    String orderId;
+    LocalDateTime createdAt;
+    CustomerDTO customer;
+    BigDecimal totalValue;
+    BigDecimal customerPayment;
+    Set<OrderDetailDTO> orderDetails;
 }

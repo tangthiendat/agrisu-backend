@@ -1,4 +1,4 @@
-package com.ttdat.agrisubackend.service;
+package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dbmapper.SupplierDbMapper;
 import com.ttdat.agrisubackend.dto.SupplierDTO;
@@ -6,7 +6,10 @@ import com.ttdat.agrisubackend.dto.SupplierHistory;
 import com.ttdat.agrisubackend.entity.Supplier;
 import com.ttdat.agrisubackend.mapper.SupplierMapper;
 import com.ttdat.agrisubackend.repository.SupplierRepository;
+import com.ttdat.agrisubackend.service.SupplierService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +21,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SupplierServiceImpl implements SupplierService{
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class SupplierServiceImpl implements SupplierService {
 
-    private final SupplierRepository supplierRepository;
-    private final SupplierMapper supplierMapper;
-    private final SupplierDbMapper supplierDbMapper;
+    SupplierRepository supplierRepository;
+    SupplierMapper supplierMapper;
+    SupplierDbMapper supplierDbMapper;
 
     @Override
     public Page<SupplierDTO> getSuppliers(int page, int pageSize) {
