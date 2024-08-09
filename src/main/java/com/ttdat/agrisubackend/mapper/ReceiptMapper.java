@@ -2,33 +2,10 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.ReceiptDTO;
 import com.ttdat.agrisubackend.entity.Receipt;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-@RequiredArgsConstructor
-public class ReceiptMapper {
-
-    private final CustomerMapper customerMapper;
-
-    public ReceiptDTO toDTO(Receipt receipt) {
-        ReceiptDTO receiptDTO = new ReceiptDTO();
-        receiptDTO.setReceiptId(receipt.getReceiptId());
-        receiptDTO.setCustomer(customerMapper.toDTO(receipt.getCustomer()));
-        receiptDTO.setCustomerCurrentDebt(receipt.getCustomerCurrentDebt());
-        receiptDTO.setPaidAmount(receipt.getPaidAmount());
-        receiptDTO.setCustomerNextDebt(receipt.getCustomerNextDebt());
-        receiptDTO.setCreatedAt(receipt.getCreatedAt());
-        return receiptDTO;
-    }
-
-    public Receipt toReceipt(ReceiptDTO receiptDTO) {
-        Receipt receipt = new Receipt();
-        receipt.setReceiptId(receiptDTO.getReceiptId());
-        receipt.setCustomer(customerMapper.toCustomer(receiptDTO.getCustomer()));
-        receipt.setCustomerCurrentDebt(receiptDTO.getCustomerCurrentDebt());
-        receipt.setPaidAmount(receiptDTO.getPaidAmount());
-        receipt.setCustomerNextDebt(receiptDTO.getCustomerNextDebt());
-        return receipt;
-    }
+@Mapper(uses = {CustomerMapper.class})
+public interface ReceiptMapper {
+    ReceiptDTO toDTO(Receipt receipt);
+    Receipt toReceipt(ReceiptDTO receiptDTO);
 }

@@ -2,22 +2,10 @@ package com.ttdat.agrisubackend.mapper;
 
 import com.ttdat.agrisubackend.dto.UnitDTO;
 import com.ttdat.agrisubackend.entity.Unit;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class UnitMapper {
-
-    public UnitDTO toDTO(Unit unit){
-        UnitDTO unitDTO = new UnitDTO();
-        unitDTO.setUnitId(unit.getUnitId());
-        unitDTO.setUnitName(unit.getUnitName());
-        return unitDTO;
-    }
-
-    public Unit toUnit(UnitDTO unitDTO){
-        Unit unit = new Unit();
-        unit.setUnitId(unitDTO.getUnitId());
-        unit.setUnitName(unitDTO.getUnitName());
-        return unit;
-    }
+@Mapper
+public interface UnitMapper {
+    UnitDTO toDTO(Unit unit);
+    Unit toUnit(UnitDTO unitDTO);
 }
