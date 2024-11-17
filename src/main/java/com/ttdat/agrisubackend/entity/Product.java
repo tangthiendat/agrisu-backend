@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,5 +39,5 @@ public class Product extends BaseEntity {
     
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    Set<ProductUnit> productUnits;
+    List<ProductUnit> productUnits;
 }

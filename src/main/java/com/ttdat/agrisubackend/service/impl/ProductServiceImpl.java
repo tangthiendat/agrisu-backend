@@ -1,6 +1,7 @@
 package com.ttdat.agrisubackend.service.impl;
 
 import com.ttdat.agrisubackend.dto.ProductDTO;
+import com.ttdat.agrisubackend.dto.ProductUnitDTO;
 import com.ttdat.agrisubackend.entity.Product;
 import com.ttdat.agrisubackend.entity.ProductUnit;
 import com.ttdat.agrisubackend.mapper.ProductMapper;
@@ -37,7 +38,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductDTO> getProducts(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return productRepository.findAll(pageable).map(productMapper::toDTO);
+        Page<Product> productPage = productRepository.findAll(pageable);
+        return productPage.map(product -> {
+            ProductDTO productDTO = productMapper.toDTO(product);
+            productDTO.setDisplayedProductUnit(productDTO.getProductUnits().stream()
+                    .filter(ProductUnitDTO::isDefault)
+                    .findFirst()
+                    .orElse(null));
+            return productDTO;
+        });
     }
 
     @Override
@@ -49,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
                 .peek(productUnit -> productUnit.setProduct(savedProduct))
                 .collect(Collectors.toSet());
         List<ProductUnit> savedProductUnits = productUnitRepository.saveAll(productUnits);
-        savedProduct.setProductUnits(new HashSet<>(savedProductUnits));
+        savedProduct.setProductUnits(savedProductUnits);
         return productMapper.toDTO(savedProduct);
     }
 
@@ -64,8 +73,8 @@ public class ProductServiceImpl implements ProductService {
         productToUpdate.setStockQuantity(convertedProduct.getStockQuantity());
         Product updatedProduct = productRepository.save(productToUpdate);
 
-        Set<ProductUnit> originalProductUnits = productToUpdate.getProductUnits();
-        Set<ProductUnit> newProductUnits = convertedProduct.getProductUnits();
+        List<ProductUnit> originalProductUnits = productToUpdate.getProductUnits();
+        List<ProductUnit> newProductUnits = convertedProduct.getProductUnits();
         List<ProductUnit> productUnitsToDelete = new ArrayList<>();
         // Delete product units that are not in the newProductUnits if
         // there is less product units in newProductUnits
@@ -94,7 +103,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductUnit> productUnitsToSave = new ArrayList<>(newProductUnits);
         productUnitsToSave.forEach(productUnit -> productUnit.setProduct(updatedProduct));
         List<ProductUnit> savedProductUnits = productUnitRepository.saveAll(productUnitsToSave);
-        updatedProduct.setProductUnits(new HashSet<>(savedProductUnits));
+        updatedProduct.setProductUnits(savedProductUnits);
         return productMapper.toDTO(updatedProduct);
     }
 
@@ -109,6 +118,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> searchProducts(String query) {
         List<Product> products = productRepository.searchByName(query);
-        return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
+        return products.stream().map(product -> {
+            ProductDTO productDTO = productMapper.toDTO(product);
+            productDTO.setDisplayedProductUnit(productDTO.getProductUnits().stream()
+                    .filter(ProductUnitDTO::isDefault)
+                    .findFirst()
+                    .orElse(null));
+            return productDTO;
+        }).collect(Collectors.toList());
     }
 }

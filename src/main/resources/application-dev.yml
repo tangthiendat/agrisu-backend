@@ -2,8 +2,8 @@ spring:
   application:
     name: agrisu-backend
   datasource:
-    url: jdbc:mysql://avnadmin:AVNS_xqL5xn9jhkdGjWKs9Un@agrisu-agrisu.a.aivencloud.com:23952/agrisu?ssl-mode=REQUIRED
+    url: jdbc:mysql://agrisu-agrisu.a.aivencloud.com:23952/agrisu?ssl-mode=REQUIRED
     username: avnadmin
     password: AVNS_xqL5xn9jhkdGjWKs9Un
   jpa:
-    show-sql: true
+    show-sql: false
